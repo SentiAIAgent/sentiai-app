@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ITool } from "~/services/api/chat/type";
-import { fetchTokenAssets } from "~/services/bsc/helius-api";
+import { fetchTokenAssets } from "~/services/bsc/api";
 import { IFullToken } from "~/services/bsc/type";
 
 const props = defineProps<{ inputs: any; output: any }>();

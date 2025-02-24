@@ -1,9 +1,9 @@
-import { transformToPortfolio, WalletPortfolio } from "./portfolio";
+import { WalletPortfolio } from "./portfolio";
 
 export const NATIVE_TOKEN = {
   symbol: "BNB",
   decimals: 9,
-  address: "bnb11111111111111111111111111111111111111112",
+  address: "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
   name: "BNB",
   imageUrl: "https://s2.coinmarketcap.com/static/img/coins/64x64/1839.png",
 };

@@ -8,11 +8,13 @@ export interface ApiResponse {
 export interface IFullToken {
   name: string;
   symbol: string;
-  imageUrl: string;
+  logo: string;
   decimals: number;
   balance?: number;
   usd_price?: number;
   price_per_token?: number;
+  amount: string;
+  amount_float: string;
   address: string;
 }
 

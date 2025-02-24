@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { findDepositAction, getPairDetail, updateDepositAction } from "~/services/api/chat/api";
-import { fetchTokenAssets } from "~/services/bsc/helius-api";
+import { fetchTokenAssets } from "~/services/bsc/api";
 import { IFullToken } from "~/services/bsc/type";
 
 const props = defineProps<{ output: string }>();

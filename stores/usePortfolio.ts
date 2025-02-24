@@ -1,6 +1,18 @@
 import { defineStore } from "pinia";
+import { getWalletAssets } from "~/services/bsc/api";
 import { Token, WalletPortfolio } from "~/services/bsc/portfolio";
+import { getClient, createConfig, http, getBalance } from "@wagmi/core";
+import { bsc } from "@wagmi/core/chains";
+import { formatUnits } from "viem";
+import { IFullToken } from "~/services/bsc/type";
+import { NATIVE_TOKEN } from "~/services/bsc/utils";
 
+export const config = createConfig({
+  chains: [bsc],
+  transports: {
+    [bsc.id]: http(),
+  },
+});
 const DURATION_CACHE = 1000 * 60 * 5;
 
 const DURATION_STORE_KEY = "portfolio-data-to-cache";
@@ -10,7 +22,7 @@ export const usePortfolio = defineStore("portfolio-store", {
     balance: 0,
     assets: {
       address: "",
-      tokens: [] as Token[],
+      tokens: [] as IFullToken[],
       totalBalance: 0,
     } as WalletPortfolio,
     totalBalance: 0,
@@ -29,9 +41,37 @@ export const usePortfolio = defineStore("portfolio-store", {
       const { getUser } = useAuthStore();
       const address = getUser().privy_wallet?.is_active ? getUser().privy_wallet.address : getUser().wallet?.address || "";
       if (!address) return;
-      this.currentAddress = address;
-      // this.init_done = false;
+      this.init_done = false;
 
+      this.currentAddress = address;
+      const [tks, balance] = await Promise.all([
+        getWalletAssets(),
+        getBalance(config, {
+          address: address as `0x${string}`,
+        }),
+      ]);
+      const bValue = Number(formatUnits(balance.value, balance.decimals));
+      this.assets.tokens = tks.map((token) => {
+        if (token.address === NATIVE_TOKEN.address) token.logo = NATIVE_TOKEN.imageUrl;
+        return token;
+      });
+      this.balance = bValue;
+      this.currentAddress = address;
+
+      this.assets.address = address;
+      this.totalBalance = this.assets.tokens.reduce((total, token) => {
+        total += Number(token.amount_float) * (token.usd_price || 0);
+        return total;
+      }, 0);
+      this.assets.totalBalance = this.totalBalance;
+      localStorage.setItem(
+        DURATION_STORE_KEY,
+        JSON.stringify({
+          timestamp: Date.now(),
+          balance: this.balance,
+          totalBalance: this.assets.totalBalance,
+        })
+      );
       // this.assets = await getWalletPortfolio(address);
 
       this.init_done = true;

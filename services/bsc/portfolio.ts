@@ -1,3 +1,5 @@
+import { IFullToken } from "./type";
+
 export interface Token {
   mint: string;
   name: string;
@@ -12,5 +14,5 @@ export interface Token {
 export interface WalletPortfolio {
   address: string;
   totalBalance: number;
-  tokens: Token[];
+  tokens: IFullToken[];
 }

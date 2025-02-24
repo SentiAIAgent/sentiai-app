@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { fetchTokenAssets } from "~/services/bsc/helius-api";
+import { fetchTokenAssets } from "~/services/bsc/api";
 
 const props = defineProps<{ output: any; inputs: any; token: any }>();
 
