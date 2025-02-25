@@ -124,7 +124,7 @@ module.exports = {
                     text0: "#131313",
                     text1: "#4c4c4c",
                     text2: "#7e7e7e",
-                    text3: "#656565",
+                    text3: "#4c4c4c",
                     rt0: "#fff",
                     ye1: "#FCD535",
                     ye2: "#F0B90B",

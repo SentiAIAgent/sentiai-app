@@ -83,9 +83,7 @@ function onCopy() {
               <img src="/images/icon-wallet-connect.svg" class="w-[24px] h-[24px]" />
               <p class="ml-2">{{ address ? shortAddress(address) : "Connect with your external wallet" }}</p>
             </div>
-            <WcConnect>
-              <div>Connect</div>
-            </WcConnect>
+            <div>Connect</div>
           </div>
           <div class="line mt-3" />
           <div class="mt-3">

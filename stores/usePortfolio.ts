@@ -41,6 +41,8 @@ export const usePortfolio = defineStore("portfolio-store", {
       const { getUser } = useAuthStore();
       const address = getUser().privy_wallet?.is_active ? getUser().privy_wallet.address : getUser().wallet?.address || "";
       if (!address) return;
+      localStorage.setItem("privy_address", address || "");
+
       this.init_done = false;
 
       this.currentAddress = address;

@@ -19,6 +19,7 @@
         "@sentry/nuxt": "^8.30.0",
         "@tanstack/vue-query": "^5.52.0",
         "@vitejs/plugin-react": "^4.3.4",
+        "@vue/devtools-api": "^7.7.2",
         "@vueuse/shared": "^12.3.0",
         "@wagmi/core": "^2.16.4",
         "@wagmi/vue": "^0.1.10",

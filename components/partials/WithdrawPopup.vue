@@ -1,7 +1,8 @@
 <script setup lang="ts">
+import { isAddress } from "viem";
 import { toast } from "../ui/toast";
 import { postExecuteTransfer, postInitNewTransfer } from "~/services/api/wallet/api";
-import { getWalletPortfolio } from "~/services/bsc/utils";
+import { getWalletPortfolio, NATIVE_TOKEN } from "~/services/bsc/utils";
 
 const openPopup = ref(false);
 const amount = ref("");
@@ -19,37 +20,13 @@ const { getUser } = useAuthStore();
 
 const selectedAddress = ref(portfolio.assets.tokens[0]?.address || "");
 
-const assets = ref<{ totalBalance: number; assets: { tokens: any[] } }>({
-  totalBalance: 0,
-  assets: {
-    tokens: [],
-  },
-});
-
-onMounted(async () => {
-  if (!props.address) {
-    assets.value = {
-      totalBalance: portfolio.totalBalance,
-      assets: portfolio.assets,
-    };
-  } else {
-    const res = await getWalletPortfolio(props.address);
-    assets.value = {
-      totalBalance: res.totalBalance,
-      assets: {
-        tokens: res.tokens,
-      },
-    };
-  }
-  selectedAddress.value = assets.value.assets.tokens[0]?.address || "";
-});
 const selectedToken = computed(() => {
-  return assets.value.assets.tokens.find((t) => t.address === selectedAddress.value);
+  return portfolio.assets.tokens.find((t) => t.address === selectedAddress.value);
 });
 const init = ref<any>(null);
 const usdAmount = computed(() => {
   if (selectedToken.value) {
-    return Number(amount.value || 0) * (selectedToken.value.pricePerToken || 0);
+    return Number(amount.value || 0) * (selectedToken.value.usd_price || 0);
   }
   return 0;
 });
@@ -63,7 +40,7 @@ watch(
   () => {
     openPopup.value = props.open;
     if (openPopup.value) {
-      selectedAddress.value = assets.value.assets.tokens[0]?.address || "";
+      selectedAddress.value = portfolio.assets.tokens[0]?.address || "";
     }
   },
   {
@@ -157,23 +134,20 @@ async function onContinueClick() {
     });
     return;
   }
-  const feeAmount = selectedToken.value?.address === "So11111111111111111111111111111111111111112" ? 0.0005 : 0;
-  if (Number(amount.value) + feeAmount > (selectedToken.value?.balance || 0)) {
+  const feeAmount = selectedToken.value?.address === NATIVE_TOKEN.address ? 0.0005 : 0;
+  if (Number(amount.value) + feeAmount > Number(selectedToken.value?.amount_float || 0)) {
     toast({
       description: "Amount must be less than balance",
       duration: 4000,
     });
     return;
   }
-  // TODO check address valid
-  // try {
-  //   new PublicKey(withdrawAddress.value);
-  // } catch (error) {
-  //   return toast({
-  //     description: "Invalid receive address",
-  //     duration: 4000,
-  //   });
-  // }
+  if (!isAddress(withdrawAddress.value))
+    return toast({
+      description: "Invalid receive address",
+      duration: 4000,
+    });
+
   const fromAddress = props.address || portfolio.currentAddress;
   if (fromAddress === getUser().privy_wallet?.address) {
     showDelegate.value = true;
@@ -194,44 +168,39 @@ watch(
   <div>
     <Dialog v-model:open="openPopup">
       <DialogContent class="p-0 flex flex-col items-center border-none" hide-close>
-        <div class="text-center text-app-ye2 text-[28px] font-[600] bg-app-background w-full py-4">Send</div>
+        <div class="text-center text-app-ye2 text-[28px] font-[600] bg-app-background w-full py-4 mt-[-2px]">Send</div>
         <div ref="container" class="flex w-[100%] overflow-hidden">
           <div class="flex flex-col w-[100%] items-center pb-8 px-4 space-y-4">
             <div class="w-full border-[1px] border-app-line1 rounded-[8px] overflow-hidden p-4">
-              <div class="row-center justify-between">
+              <div class="">
                 <p>To:</p>
                 <input
                   placeholder="Enter received address"
                   v-model="withdrawAddress"
-                  class="outline-none text-end flex-1 h-[32px] bg-transparent mr-1 ml-3"
+                  class="mt-2 outline-none w-full rounded-[4px] pl-3 h-[32px] bg-app-card2"
                 />
               </div>
 
-              <div class="line" />
+              <div class="line mt-4" />
               <div class="mt-4">
                 <p>Amount</p>
-                <div class="row-center">
+                <div class="row-center mt-2 outline-nonew-full rounded-[4px] pl-3 bg-app-card2">
                   <Select v-model="selectedAddress">
-                    <SelectTrigger class="row-cente">
-                      <div v-if="selectedToken" class="row-center w-full">
-                        <img :src="selectedToken?.imageUrl" class="w-[28px] h-[28px] rounded-full" />
-                        <div class="flex-1 ml-2">
-                          <p class="text-[16px]">{{ selectedToken?.name }}</p>
-                          <p class="text-app-text3">{{ selectedToken?.symbol }}</p>
-                        </div>
-                        <p class="mr-2">{{ formatNumber(selectedToken?.balance, 3) }}</p>
+                    <SelectTrigger class="row-center w-auto outline-none">
+                      <div v-if="selectedToken" class="row-center">
+                        <img :src="selectedToken?.logo" class="w-[28px] h-[28px] rounded-full" />
+                        <p class="text-app-text3 ml-2">{{ selectedToken?.symbol }}</p>
                       </div>
                     </SelectTrigger>
-                    <SelectContent class="p-0">
+                    <SelectContent class="p-0 w-[200px]">
                       <SelectGroup class="space-y-2 p-0">
-                        <SelectItem v-for="token in assets.assets.tokens" :key="token.address" :value="token.address" class="w-full h-[56px]">
+                        <SelectItem v-for="token in portfolio.assets.tokens" :key="token.address" :value="token.address" class="w-full h-[56px]">
                           <div class="w-full row-center rounded-[0] border-[0] h-[56px]">
-                            <img :src="token?.imageUrl" class="w-[28px] h-[28px] rounded-full" />
+                            <img :src="token?.logo" class="w-[28px] h-[28px] rounded-full" />
                             <div class="flex-1 ml-2">
-                              <p class="text-[16px]">{{ token?.name }}</p>
-                              <p class="text-app-text3">{{ token?.symbol }}</p>
+                              <p class="text-[16px]">{{ token?.symbol }}</p>
                             </div>
-                            <p class="mr-2">{{ formatNumber(token?.balance, 3) }}</p>
+                            <p class="mr-2">{{ formatNumber(token?.amount_float, 3) }}</p>
                           </div>
                         </SelectItem>
                       </SelectGroup>
@@ -244,6 +213,7 @@ watch(
                     class="outline-none text-end flex-1 h-full bg-transparent mr-1 ml-3"
                   />
                 </div>
+                <p class="mt-1">Balance: {{ formatNumber(selectedToken.amount_float, 3) }} {{ selectedToken?.symbol }}</p>
               </div>
             </div>
             <PartialsButton
