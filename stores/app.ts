@@ -8,6 +8,7 @@ export const useAppSetting = defineStore("appSetting", {
     loadAppDone: false,
     agents: [] as IAgent[],
     channels: [] as IConversation[],
+    currentWcWallet: useLocalStorage("current-wc-wallet", ""),
   }),
   actions: {
     saveLoadApp() {
@@ -15,6 +16,9 @@ export const useAppSetting = defineStore("appSetting", {
     },
     changeLoading(value: boolean) {
       this.showLoading = value;
+    },
+    saveCurrentWcWallet(newValue: string) {
+      this.currentWcWallet = newValue;
     },
     async init() {
       if (this.agents.length) return;

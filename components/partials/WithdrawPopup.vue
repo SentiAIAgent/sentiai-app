@@ -17,7 +17,7 @@ const container = ref<HTMLElement | null>(null);
 const MINT_USD_TO_WITHDRAW = 1;
 const { getUser } = useAuthStore();
 
-const selectedAddress = ref("");
+const selectedAddress = ref(portfolio.assets.tokens[0]?.address || "");
 
 const assets = ref<{ totalBalance: number; assets: { tokens: any[] } }>({
   totalBalance: 0,
@@ -41,10 +41,10 @@ onMounted(async () => {
       },
     };
   }
-  selectedAddress.value = assets.value.assets.tokens[0]?.mint || "";
+  selectedAddress.value = assets.value.assets.tokens[0]?.address || "";
 });
 const selectedToken = computed(() => {
-  return assets.value.assets.tokens.find((t) => t.mint === selectedAddress.value);
+  return assets.value.assets.tokens.find((t) => t.address === selectedAddress.value);
 });
 const init = ref<any>(null);
 const usdAmount = computed(() => {
@@ -63,7 +63,7 @@ watch(
   () => {
     openPopup.value = props.open;
     if (openPopup.value) {
-      selectedAddress.value = assets.value.assets.tokens[0]?.mint || "";
+      selectedAddress.value = assets.value.assets.tokens[0]?.address || "";
     }
   },
   {
@@ -157,7 +157,7 @@ async function onContinueClick() {
     });
     return;
   }
-  const feeAmount = selectedToken.value?.mint === "So11111111111111111111111111111111111111112" ? 0.0005 : 0;
+  const feeAmount = selectedToken.value?.address === "So11111111111111111111111111111111111111112" ? 0.0005 : 0;
   if (Number(amount.value) + feeAmount > (selectedToken.value?.balance || 0)) {
     toast({
       description: "Amount must be less than balance",
@@ -193,40 +193,12 @@ watch(
 <template>
   <div>
     <Dialog v-model:open="openPopup">
-      <DialogContent class="bg-[#141414] border-none flex overflow-hidden">
+      <DialogContent class="p-0 flex flex-col items-center border-none" hide-close>
+        <div class="text-center text-app-ye2 text-[28px] font-[600] bg-app-background w-full py-4">Send</div>
         <div ref="container" class="flex w-[100%] overflow-hidden">
-          <div class="flex-shrink-0 flex flex-col w-[100%] items-center pb-8 space-y-4">
-            <DialogTitle class="text-center text-[28px] font-[600] mt-2">Withdraw</DialogTitle>
-            <div class="line" />
-            <div class="w-full border-[1px] border-app-line1 rounded-[8px] overflow-hidden">
-              <Select v-model="selectedAddress">
-                <SelectTrigger class="w-full row-center bg-app-card1 rounded-[0] border-[0] h-[56px] outline-none px-3 py-2">
-                  <div v-if="selectedToken" class="row-center w-full">
-                    <img :src="selectedToken?.imageUrl" class="w-[28px] h-[28px] rounded-full" />
-                    <div class="flex-1 ml-2">
-                      <p class="text-[16px]">{{ selectedToken?.name }}</p>
-                      <p class="text-app-text3">{{ selectedToken?.symbol }}</p>
-                    </div>
-                    <p class="mr-2">{{ formatNumber(selectedToken?.balance, 3) }}</p>
-                  </div>
-                  <div v-else><p class="text-[16px]">Select token</p></div>
-                </SelectTrigger>
-                <SelectContent class="p-0">
-                  <SelectGroup class="space-y-2 p-0">
-                    <SelectItem v-for="token in assets.assets.tokens" :key="token.mint" :value="token.mint" class="w-full h-[56px]">
-                      <div class="w-full row-center rounded-[0] border-[0] h-[56px]">
-                        <img :src="token?.imageUrl" class="w-[28px] h-[28px] rounded-full" />
-                        <div class="flex-1 ml-2">
-                          <p class="text-[16px]">{{ token?.name }}</p>
-                          <p class="text-app-text3">{{ token?.symbol }}</p>
-                        </div>
-                        <p class="mr-2">{{ formatNumber(token?.balance, 3) }}</p>
-                      </div>
-                    </SelectItem>
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
-              <div class="row-center justify-between px-3 py-3">
+          <div class="flex flex-col w-[100%] items-center pb-8 px-4 space-y-4">
+            <div class="w-full border-[1px] border-app-line1 rounded-[8px] overflow-hidden p-4">
+              <div class="row-center justify-between">
                 <p>To:</p>
                 <input
                   placeholder="Enter received address"
@@ -234,31 +206,43 @@ watch(
                   class="outline-none text-end flex-1 h-[32px] bg-transparent mr-1 ml-3"
                 />
               </div>
+
               <div class="line" />
-              <div class="row-center justify-between px-3 py-2">
-                <div>
-                  <p>Amount</p>
-                  <p class="text-app-text3">Min: ${{ MINT_USD_TO_WITHDRAW }}</p>
-                </div>
-                <div class="flex-1">
-                  <div class="row-center flex-1">
-                    <div class="flex flex-1 relative h-[30px] mt-[-12px]">
-                      <input
-                        placeholder="Enter Amount"
-                        v-model="amount"
-                        type="number"
-                        class="outline-none text-end flex-1 h-full bg-transparent mr-1 ml-3"
-                      />
-                      <p class="text-app-text3 text-end mr-1 absolute right-0 bottom-[-12px]">${{ formatNumber(usdAmount, 2) }}</p>
-                    </div>
-                    <button
-                      v-if="selectedToken?.mint !== 'So11111111111111111111111111111111111111112'"
-                      @click="amount = selectedToken?.balance"
-                      class="ml-5"
-                    >
-                      Max
-                    </button>
-                  </div>
+              <div class="mt-4">
+                <p>Amount</p>
+                <div class="row-center">
+                  <Select v-model="selectedAddress">
+                    <SelectTrigger class="row-cente">
+                      <div v-if="selectedToken" class="row-center w-full">
+                        <img :src="selectedToken?.imageUrl" class="w-[28px] h-[28px] rounded-full" />
+                        <div class="flex-1 ml-2">
+                          <p class="text-[16px]">{{ selectedToken?.name }}</p>
+                          <p class="text-app-text3">{{ selectedToken?.symbol }}</p>
+                        </div>
+                        <p class="mr-2">{{ formatNumber(selectedToken?.balance, 3) }}</p>
+                      </div>
+                    </SelectTrigger>
+                    <SelectContent class="p-0">
+                      <SelectGroup class="space-y-2 p-0">
+                        <SelectItem v-for="token in assets.assets.tokens" :key="token.address" :value="token.address" class="w-full h-[56px]">
+                          <div class="w-full row-center rounded-[0] border-[0] h-[56px]">
+                            <img :src="token?.imageUrl" class="w-[28px] h-[28px] rounded-full" />
+                            <div class="flex-1 ml-2">
+                              <p class="text-[16px]">{{ token?.name }}</p>
+                              <p class="text-app-text3">{{ token?.symbol }}</p>
+                            </div>
+                            <p class="mr-2">{{ formatNumber(token?.balance, 3) }}</p>
+                          </div>
+                        </SelectItem>
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                  <input
+                    placeholder="Enter Amount"
+                    v-model="amount"
+                    type="number"
+                    class="outline-none text-end flex-1 h-full bg-transparent mr-1 ml-3"
+                  />
                 </div>
               </div>
             </div>
@@ -278,7 +262,7 @@ watch(
               </ul>
             </div>
           </div>
-          <div class="flex-shrink-0 flex flex-col w-[100%] items-center pb-8 space-y-4 relative" :class="{ hidden: !init }">
+          <div class="flex-shrink-0 px-4 flex flex-col w-[100%] items-center pb-8 space-y-4 relative" :class="{ hidden: !init }">
             <DialogTitle class="text-center text-[28px] font-[600] mt-2">Confirm Withdraw</DialogTitle>
             <button v-if="!txhash" class="absolute top-[0px] left-0 cursor-pointer p-1" @click="scrollPage('left')">
               <img src="/images/icon-arrow-back.svg" class="w-[20px]" />

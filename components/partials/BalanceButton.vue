@@ -19,6 +19,7 @@ const portfolio_content = ref<HTMLElement | null>(null);
 const container = ref<HTMLElement | null>(null);
 const openWithdraw = ref(false);
 const openAccount = ref(false);
+const vuePrivy = useVuePrivy();
 
 onClickOutside(container, () => (openPortfolio.value = false));
 
@@ -79,7 +80,7 @@ async function onOpenPortfolio(e: any) {
         <div class="relative flex flex-col max-h-[600px] overflow-y-auto pb-10">
           <div class="row-center justify-between sticky top-0 left-0 w-full p-4">
             <div class="row-center cursor-pointer text-app-text2" @click="viewScanner">
-              <img :src="getUser().avatar_url" class="w-[24px] h-[24px] mr-2 rounded-full" />
+              <img v-if="getUser()?.avatar_url" :src="getUser().avatar_url" class="w-[24px] h-[24px] mr-2 rounded-full" />
               <p class="text-[16px]">{{ shortAddress(addressView) }}</p>
               <div class="ml-2">
                 <NuxtIcon name="icon-scanner" class="text-[16px]" />
@@ -94,25 +95,25 @@ async function onOpenPortfolio(e: any) {
 
             <div class="row-center justify-between mt-4">
               <div class="flex flex-col items-center">
-                <div class="bg-[#1a1a1a] rounded-full p-3 cursor-pointer" @click="onOpenDeposit">
+                <div class="bg-app-btnBg rounded-full p-3 cursor-pointer" @click="onOpenDeposit">
                   <img src="/images/icon-receive.svg" />
                 </div>
                 <p>Receive</p>
               </div>
               <div class="flex flex-col items-center">
-                <div class="bg-[#1a1a1a] rounded-full p-3 cursor-pointer" @click="onOpenWithdraw">
+                <div class="bg-app-btnBg rounded-full p-3 cursor-pointer" @click="onOpenWithdraw">
                   <img src="/images/icon-wallet-send.svg" />
                 </div>
                 <p>Send</p>
               </div>
               <div class="flex flex-col items-center">
-                <div class="bg-[#1a1a1a] rounded-full p-3 cursor-pointer" @click="onOpenWithdraw">
+                <div class="bg-app-btnBg rounded-full p-3 cursor-pointer" @click="vuePrivy.request('export')">
                   <img src="/images/icon-export.svg" />
                 </div>
                 <p>Export</p>
               </div>
               <div class="flex flex-col items-center">
-                <div class="bg-[#1a1a1a] rounded-full p-3 cursor-pointer" @click="onOpenWithdraw">
+                <div class="bg-app-btnBg rounded-full p-3 cursor-pointer" @click="vuePrivy.request('delegate')">
                   <img src="/images/icon-delegate.svg" />
                 </div>
                 <p>Delegate</p>

@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { getWalletAssets } from "~/services/bsc/api";
+import { fetchTokenAssets, getWalletAssets } from "~/services/bsc/api";
 import { Token, WalletPortfolio } from "~/services/bsc/portfolio";
 import { getClient, createConfig, http, getBalance } from "@wagmi/core";
 import { bsc } from "@wagmi/core/chains";
@@ -72,6 +72,7 @@ export const usePortfolio = defineStore("portfolio-store", {
           totalBalance: this.assets.totalBalance,
         })
       );
+      fetchTokenAssets(["0x0ce73cb72f77daee4630921bfbb13b0f4e2e0fe1", "0x0ec12db33551afba853b691b4edf49196ea0e99a"]);
       // this.assets = await getWalletPortfolio(address);
 
       this.init_done = true;

@@ -3,7 +3,7 @@ import { useDelegatedActions, usePrivy } from "@privy-io/react-auth";
 import { useFundWallet, useWallets } from "@privy-io/react-auth";
 
 export default function () {
-    const { user } = usePrivy();
+    const { user, exportWallet } = usePrivy();
     const { ready, wallets } = useWallets();
     const { delegateWallet, revokeWallets } = useDelegatedActions();
     const { fundWallet } = useFundWallet();
@@ -23,7 +23,7 @@ export default function () {
         console.log("export", wallets);
 
         if (wallets?.length > 0) {
-            // exportWallet({ address: user?.wallet?.address || "" });
+            exportWallet({ address: user?.wallet?.address || "" });
         }
     }
 

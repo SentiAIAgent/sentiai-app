@@ -8,12 +8,12 @@ const amount = ref(0);
 const props = defineProps<{
   open: boolean;
   onClose: () => void;
-  address?: string;
 }>();
 const depositBalance = ref(0);
 const loading = ref(false);
+const address = ref("");
 
-const addressView = computed(() => props.address || getUser().privy_wallet.address || getUser().wallet?.address);
+const addressView = computed(() => getUser().privy_wallet.address || getUser().wallet?.address);
 
 async function onWalletDepositChange(address?: string) {
   depositBalance.value = await getNativeTokenBalance(address || "");
@@ -72,43 +72,53 @@ function onCopy() {
 
 <template>
   <Dialog v-model:open="openQRCode">
-    <DialogContent class="bg-[#141418] py-8 px-4 border-none flex flex-col items-center">
-      <DialogTitle class="text-center text-[28px] font-[600] mt-2">Deposit</DialogTitle>
-      <div class="line" />
+    <DialogContent class="bg-app-card1 p-0 pb-4 border-none flex flex-col items-center" hide-close>
+      <div class="text-center text-app-ye2 text-[28px] font-[600] bg-app-background w-full py-4 mt-[-2px]">Receive</div>
 
-      <p class="text-[#CACACA]">Deposit directly from your connected wallet</p>
-      <div class="border-[1px] border-app-line2 w-full rounded-[12px] p-4">
-        <div class="row-center justify-between">
-          <div class="row-center">
-            <img src="/images/icon-phantom.svg" class="w-[24px] h-[24px]" />
-            <p class="ml-2 font-[600]">{{ address ? shortAddress(address) : "Connect with Other Wallet" }}</p>
-          </div>
-        </div>
-        <div class="line mt-4" />
-        <div class="mt-3">
-          <p>Token & Amount</p>
-          <div class="row-center mt-2">
-            <div class="row-center py-[6px] px-2 bg-app-card1 rounded-[6px] flex-1">
-              <img :src="NATIVE_TOKEN.imageUrl" class="w-[28px] rounded-full" />
-              <input type="number" v-model="amount" placeholder="Input amount" class="ml-2 flex-1 bg-transparent outline-none" />
+      <div class="px-4 w-full flex flex-col items-center">
+        <p class="text-app-text0">Receive BNB directly from your connected wallet</p>
+        <div class="border-[1px] border-[rgba(0, 0, 0, 0.90)] w-full rounded-[12px] p-4 mt-4 shadow">
+          <div class="row-center justify-between">
+            <div class="row-center">
+              <img src="/images/icon-wallet-connect.svg" class="w-[24px] h-[24px]" />
+              <p class="ml-2">{{ address ? shortAddress(address) : "Connect with your external wallet" }}</p>
             </div>
-            <PartialsButton :loading="loading" @click="onDeposit" text="Deposit" class="px-4 py-2 rounded-[8px] ml-2" :disabled="!address" />
+            <WcConnect>
+              <div>Connect</div>
+            </WcConnect>
           </div>
-          <p v-if="address" class="mt-1 text-app-text3">Available: {{ formatNotationNumber(depositBalance) }} SOL</p>
+          <div class="line mt-3" />
+          <div class="mt-3">
+            <p>Amount</p>
+            <div class="row-center mt-2">
+              <div class="row-center py-[6px] px-2 bg-[#e3e3e3] rounded-[6px] flex-1">
+                <img :src="NATIVE_TOKEN.imageUrl" class="w-[28px] rounded-full" />
+                <input type="number" v-model="amount" placeholder="Input amount" class="ml-2 flex-1 bg-transparent outline-none" />
+              </div>
+              <PartialsButton
+                :loading="loading"
+                @click="onDeposit"
+                :text="address ? 'Receive' : 'Deposit'"
+                class="px-4 py-2 rounded-[8px] ml-2"
+                :disabled="!address"
+              />
+            </div>
+            <p class="mt-1 text-app-text3">Available: {{ formatNotationNumber(depositBalance) }} BNB</p>
+          </div>
         </div>
-      </div>
-      <p class="text-[#CACACA] mt-1">Or Scan QR code</p>
+        <p class="text-app-text0 mt-4">Or Scan QR code</p>
 
-      <div class="rounded-[12px] border-[1px] border-[#ffffff33]">
-        <div class="p-4 rounded-[12px]">
-          <div class="rounded-[8px] overflow-hidden">
-            <Qrcode :value="addressView" variant="pixelated" class="w-[150px]" />
+        <div class="rounded-[12px] border-[1px] bg-app-dark1 border-[#ffffff33] mt-4">
+          <div class="p-4 rounded-[12px]">
+            <div class="rounded-[8px] overflow-hidden">
+              <Qrcode :value="addressView" variant="pixelated" class="w-[150px]" />
+            </div>
           </div>
         </div>
-      </div>
-      <div class="row-center cursor-pointer w-full px-4 py-2 bg-[#ffffff11] rounded-[6px] mt-2" @click="onCopy">
-        <p class="flex-1 text-[16px]">Account Address: {{ shortAddress(addressView) }}</p>
-        <img src="/images/icon-copy.svg" class="ml-2" />
+        <div class="row-center cursor-pointer px-4 py-2 bg-[#ffffff11] rounded-[6px] mt-2" @click="onCopy">
+          <p class="text-[16px]">{{ shortAddress(addressView) }}</p>
+          <NuxtIcon name="icon-copy" class="text-[16px] ml-2 bg-app-dark1 p-1 rounded-[2px] text-app-ye2" />
+        </div>
       </div>
     </DialogContent>
   </Dialog>

@@ -14,7 +14,9 @@ export async function fetchTokenAssets(addresses: string[]): Promise<IFullToken[
     if (storeTokens.length === addresses.length) {
       return storeTokens;
     }
-    // const { data } = await Fetch.get<{ tokens: IFullToken[] }>(`@api/wallets/portfolio`);
+    const { data } = await Fetch.post<{ tokens: IFullToken[] }>(`@api/tokens/get-infos`, {
+      addresses,
+    });
 
     const tokens: any[] = [];
     return tokens;
