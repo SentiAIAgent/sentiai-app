@@ -54,7 +54,11 @@ export const usePortfolio = defineStore("portfolio-store", {
       ]);
       const bValue = Number(formatUnits(balance.value, balance.decimals));
       this.assets.tokens = tks.map((token) => {
-        if (token.address === NATIVE_TOKEN.address) token.logo = NATIVE_TOKEN.logo;
+        if (token.address === NATIVE_TOKEN.address) token.logo = NATIVE_TOKEN.imageUrl;
+        const price_per_token = token.usd_price || 0;
+        const usd_price = Number(token.balance) * Number(price_per_token);
+        token.price_per_token = price_per_token;
+        token.usd_price = usd_price;
         return token;
       });
       this.balance = bValue;
@@ -62,7 +66,7 @@ export const usePortfolio = defineStore("portfolio-store", {
 
       this.assets.address = address;
       this.totalBalance = this.assets.tokens.reduce((total, token) => {
-        total += Number(token.amount_float) * (token.usd_price || 0);
+        total += Number(token.amount_float) * (token.price_per_token || 0);
         return total;
       }, 0);
       this.assets.totalBalance = this.totalBalance;

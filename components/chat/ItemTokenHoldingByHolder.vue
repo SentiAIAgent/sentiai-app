@@ -16,7 +16,7 @@ const data = convertToolOutput(props.output);
         <thead class="sticky top-0 bg-app-card1">
           <tr class="text-app-text2">
             <td class="w-[30px]"></td>
-            <td>Address</td>
+            <td class="text-start">Address</td>
             <td class="text-start pl-2">Hold Token</td>
           </tr>
         </thead>
@@ -26,7 +26,8 @@ const data = convertToolOutput(props.output);
             <td class="text-start">{{ shortAddress(item.address) }}</td>
             <td class="text-start max-w-[400px] pl-2">
               <span v-for="(token, idx) in item.tokens" :key="idx"
-                >{{ token.symbol }}<span class="text-app-text2">(${{ formatNotationNumber(token.usd_value, 1) }})</span>,
+                >{{ token.symbol }}<span class="text-app-text2">(${{ formatNotationNumber(token.usd_value, 1) }})</span
+                >{{ idx === item.tokens.length - 1 ? "" : ", " }}
               </span>
             </td>
           </tr>

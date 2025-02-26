@@ -374,7 +374,10 @@ function onCheckDelegate() {
   <section class="flex-1 h-full flex flex-col bg-app-bg0 overflow-hidden">
     <div class="row-center justify-between w-full border-b-[1px] border-b-app-line1">
       <BotButton />
-      <BalanceButton class="mr-4" />
+      <div class="row-center">
+        <BalanceButton class="mr-4" />
+        <PartialsUserInfor class="mr-4" />
+      </div>
     </div>
     <div class="flex-1 overflow-hidden flex flex-col items-center">
       <div class="flex-1 flex flex-col items-center w-full md:w-[90%] overflow-hidden md:max-w-[768px] 2xl:max-w-[900px]">

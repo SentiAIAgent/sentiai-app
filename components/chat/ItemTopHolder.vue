@@ -16,11 +16,11 @@ const totalPercent = (data.items as { amount_percentage: number }[]).reduce((tot
     <div class="py-3">
       <p class="text-app-text1 font-[600]">Top {{ data.items.length }} Holders Entry Points</p>
       <div class="mt-3 max-h-[350px] overflow-scroll relative">
-        <table class="w-full min-w-[400px] bg-app-card1 border-separate py-3 px-2 text-center rounded-[6px]">
-          <thead class="sticky top-0 bg-app-card1">
+        <table class="w-full min-w-[400px] bg-app-card12 border-separate py-3 px-2 text-center rounded-[6px]">
+          <thead class="sticky top-0 bg-app-card12">
             <tr class="text-app-text2">
               <td class="w-[30px]"></td>
-              <td>Address</td>
+              <td class="text-start">Address</td>
               <td>% Hold</td>
               <td>Entry</td>
               <td>PNL</td>

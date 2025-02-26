@@ -53,11 +53,11 @@ function getComponentProps(id: TToolID, item: ITool) {
         <p class="font-[600] text-app-text1">{{ getTool(item.id).name }}</p>
       </div>
       <div v-if="completed" :class="{ 'border-t-[1px] border-t-[#FFFFFF1A]': !checkHideTaskName(item.id) }">
-        <div v-if="checkError(item.outputs)" class="row-center p-3">
-          <div class="h-[48px] w-[48px] rounded-[6px] flex items-center justify-center bg-app-card1">
+        <div v-if="checkError(item.outputs)" class="row-center p-3 bg-app-bg0">
+          <div class="h-[48px] w-[48px] rounded-[6px] flex items-center justify-center bg-app-background">
             <img src="/images/icon-error.svg" class="w-[24px] h-[24px]" />
           </div>
-          <p class="text-app-text2 font-[600] ml-2">Error</p>
+          <p class="text-app-text1 font-[600] ml-2">Error</p>
         </div>
         <div v-else-if="!!getTool(item.id)">
           <component :is="getTool(item.id).component" v-bind="getComponentProps(item.id, item)" />

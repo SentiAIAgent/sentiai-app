@@ -61,6 +61,7 @@ function onItemMenuClick() {
         </div>
       </PopoverContent>
     </Popover>
+
     <BotInformation v-model:open="openBotInformation" />
   </div>
 </template>

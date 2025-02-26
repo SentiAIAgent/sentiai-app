@@ -113,6 +113,95 @@ async function onOpenPortfolio(e: any) {
                 <p>Export</p>
               </div>
               <div class="flex flex-col items-center">
+                <div
+                  class="bg-app-btnBg rounded-full p-3 cursor-pointer"
+                  @click="vuePrivy.request(vuePrivy.user?.wallet?.delegated ? 'revoke_delegate' : 'delegate')"
+                >
+                  <img src="/images/icon-delegate.svg" />
+                </div>
+                <p :class="vuePrivy.user?.wallet?.delegated ? 'text-app-red' : ''">{{ vuePrivy.user?.wallet?.delegated ? "Revoke" : "Delegate" }}</p>
+              </div>
+            </div>
+            <div class="mt-4">
+              <p class="text-app-text2">Token ({{ portfolio.assets.tokens.length }})</p>
+
+              <div class="min-h-[150px]">
+                <div v-for="(token, idx) in portfolio.assets.tokens" :key="token.address" class="mt-2">
+                  <div class="row-center justify-between">
+                    <div class="row-center">
+                      <a class="w-[28px] h-[28px] mr-2 rounded-full" :href="`https://bscscan.com/token/${token.address}`" target="_blank">
+                        <img :src="token.logo" class="w-full rounded-full" />
+                      </a>
+                      <div>
+                        <p class="text-[16px] text-app-text1">
+                          {{ token.name }}
+                          <span class="text-[12px] text-app-text2">({{ token.symbol }})</span>
+                        </p>
+                        <div class="row-center cursor-pointer" @click="copyToClipboard(token.address)">
+                          <p class="text-app-text2">{{ shortAddress(token.address) }}</p>
+                          <NuxtIcon name="icon-copy" class="ml-2 text-app-text2" />
+                        </div>
+                      </div>
+                    </div>
+                    <TooltipProvider :delayDuration="0">
+                      <Tooltip>
+                        <TooltipTrigger>
+                          <div class="text-end">
+                            <p class="font-[600] text-app-text1">{{ formatNumber(token.amount_float, 3) }}</p>
+                            <p class="text-app-text2">${{ formatNumber(token.usd_price, 2) }}</p>
+                          </div>
+                        </TooltipTrigger>
+                        <TooltipContent class="z-[1000]" side="left">
+                          <p>Price: ${{ formatNumber(token.price_per_token, 2) }}</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <Dialog v-model:open="openPortfolioMobile">
+      <DialogContent class="bg-app-bg0 py-0 px-0 border-none max-h-screen" hideClose>
+        <div class="flex flex-col max-h-screen overflow-y-auto">
+          <div class="row-center justify-between sticky top-0 left-0 w-full p-4">
+            <div class="row-center cursor-pointer text-app-text2" @click="viewScanner">
+              <img v-if="getUser()?.avatar_url" :src="getUser().avatar_url" class="w-[24px] h-[24px] mr-2 rounded-full" />
+              <p class="text-[16px]">{{ shortAddress(addressView) }}</p>
+              <div class="ml-2">
+                <NuxtIcon name="icon-scanner" class="text-[16px]" />
+              </div>
+            </div>
+            <div class="cursor-pointer p-1 border-[1px] border-[#979797] rounded-[8px]" @click="openPortfolio = false">
+              <NuxtIcon name="icon-close" class="" />
+            </div>
+          </div>
+          <div class="px-4">
+            <p class="text-[28px] font-[600]">${{ formatNumber(portfolio.totalBalance, 2) }}</p>
+
+            <div class="row-center justify-between mt-4">
+              <div class="flex flex-col items-center">
+                <div class="bg-app-btnBg rounded-full p-3 cursor-pointer" @click="onOpenDeposit">
+                  <img src="/images/icon-receive.svg" />
+                </div>
+                <p>Receive</p>
+              </div>
+              <div class="flex flex-col items-center">
+                <div class="bg-app-btnBg rounded-full p-3 cursor-pointer" @click="onOpenWithdraw">
+                  <img src="/images/icon-wallet-send.svg" />
+                </div>
+                <p>Send</p>
+              </div>
+              <div class="flex flex-col items-center">
+                <div class="bg-app-btnBg rounded-full p-3 cursor-pointer" @click="vuePrivy.request('export')">
+                  <img src="/images/icon-export.svg" />
+                </div>
+                <p>Export</p>
+              </div>
+              <div class="flex flex-col items-center">
                 <div class="bg-app-btnBg rounded-full p-3 cursor-pointer" @click="vuePrivy.request('delegate')">
                   <img src="/images/icon-delegate.svg" />
                 </div>
@@ -130,13 +219,13 @@ async function onOpenPortfolio(e: any) {
                         <img :src="token.logo" class="w-full rounded-full" />
                       </a>
                       <div>
-                        <p class="text-[16px] text-[#cacaca]">
+                        <p class="text-[16px] text-app-text1">
                           {{ token.name }}
-                          <span class="text-[12px] text-[#979797]">({{ token.symbol }})</span>
+                          <span class="text-[12px] text-app-text2">({{ token.symbol }})</span>
                         </p>
                         <div class="row-center cursor-pointer" @click="copyToClipboard(token.address)">
-                          <p class="text-[#979797]">{{ shortAddress(token.address) }}</p>
-                          <NuxtIcon name="icon-copy" class="ml-2 text-[#979797]" />
+                          <p class="text-app-text2">{{ shortAddress(token.address) }}</p>
+                          <NuxtIcon name="icon-copy" class="ml-2 text-app-text2" />
                         </div>
                       </div>
                     </div>
@@ -144,14 +233,12 @@ async function onOpenPortfolio(e: any) {
                       <Tooltip>
                         <TooltipTrigger>
                           <div class="text-end">
-                            <p class="font-[600] text-[#cacaca]">{{ formatNumber(token.amount_float, 3) }}</p>
-                            <p class="text-[#979797]">
-                              {{ token.usd_price ? `$${formatNumber(Number(token.amount_float) * token.usd_price, 2)}` : "---" }}
-                            </p>
+                            <p class="font-[600] text-app-text1">{{ formatNumber(token.amount_float, 3) }}</p>
+                            <p class="text-app-text2">${{ formatNumber(token.usd_price, 2) }}</p>
                           </div>
                         </TooltipTrigger>
                         <TooltipContent class="z-[1000]" side="left">
-                          <p>Price: ${{ formatNumber(token.usd_price, 2) }}</p>
+                          <p>Price: ${{ formatNumber(token.price_per_token, 2) }}</p>
                         </TooltipContent>
                       </Tooltip>
                     </TooltipProvider>
@@ -161,11 +248,6 @@ async function onOpenPortfolio(e: any) {
             </div>
           </div>
         </div>
-      </div>
-    </div>
-    <Dialog v-model:open="openPortfolioMobile">
-      <DialogContent class="bg-[#141414] py-4 px-0 border-none max-h-screen" hideClose>
-        <div class="flex flex-col max-h-screen overflow-y-auto py-6 px-4 pb-10"></div>
       </DialogContent>
     </Dialog>
     <DepositPopup :open="openDeposit" :address="addressView" :onClose="() => (openDeposit = false)" />

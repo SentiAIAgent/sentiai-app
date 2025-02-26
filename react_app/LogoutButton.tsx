@@ -14,7 +14,7 @@ export default function ({ children, onSuccess }: { children: React.ReactNode; o
         window.location.href = "/auth/login";
     }
     return (
-        <div class={"py-2 px-3 font-[500] cursor-pointer row-center hover:bg-[#232323]"} onClick={onClick}>
+        <div class={"py-2 font-[500] cursor-pointer row-center hover:bg-app-card12"} onClick={onClick}>
             <span class="flex-1 text-[red]">Logout</span>
         </div>
     );

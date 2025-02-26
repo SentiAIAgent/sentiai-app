@@ -38,14 +38,12 @@ export const formatNumber = (number?: string | number, behind = 5) => {
     return `< 0.${"0".repeat(behind - 1)}1`;
   }
   let value = number.toString();
-
   if (value.includes(".") || value.includes(",")) {
     value = value.replace(/(\d)(?=(\d{3})+\.)/g, "$1,");
     const [frontDot, behindDot] = value.split(".");
     const tmpSub = Math.round(Number(`0.${behindDot}`) * Math.pow(10, behind)) / Math.pow(10, behind);
-    const sub = tmpSub.toString().includes(".") ? tmpSub.toString().split(".")[1] : "0";
-
-    value = `${frontDot}${sub ? "." : ""}${sub}`;
+    const [sub1, sub2] = tmpSub.toString().split(".");
+    value = `${Number(frontDot) + Number(sub1 || 0)}${sub2 ? "." : ""}${sub2 || ""}`;
   } else {
     value = value.replace(/(\d)(?=(\d{3})+$)/g, "$1,");
   }
