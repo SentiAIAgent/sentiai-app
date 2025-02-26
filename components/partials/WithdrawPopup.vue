@@ -54,15 +54,7 @@ onUnmounted(() => {
 
 async function checkTransactionStatus(tx: string) {
   return new Promise(async (res) => {
-    interval.value = setInterval(async () => {
-      // const result = await connection.getSignatureStatus(tx, {
-      //   searchTransactionHistory: true,
-      // });
-      // if (result.value?.confirmationStatus === "finalized") {
-      //   clearInterval(interval.value);
-      //   return res(true);
-      // }
-    }, 1500);
+    interval.value = setInterval(async () => {}, 1500);
   });
 }
 
@@ -87,9 +79,9 @@ async function onExcuteWithdraw() {
         duration: 4000,
       });
       txhash.value = rs.tx_signature;
-      const status = await checkTransactionStatus(rs.tx_signature);
-      console.log("status", status);
+
       statusChecking.value = false;
+      setTimeout(() => (openPopup.value = false), 1500);
     }, 300);
   } else {
     toast({
@@ -105,7 +97,7 @@ async function startInit() {
   const rs = await postInitNewTransfer({
     from_address: props.address || portfolio.currentAddress,
     amount: Number(amount.value),
-    mint: selectedAddress.value,
+    token_address: selectedAddress.value,
     to_address: withdrawAddress.value,
   });
   if (rs) {
@@ -243,7 +235,7 @@ watch(
               <div class="line" />
               <div class="row-center justify-between p-4">
                 <p>Fee</p>
-                <p>{{ formatNumber(init?.priority_fee, 3) }}</p>
+                <p>0.00017 BNB</p>
               </div>
               <div class="line" />
 
