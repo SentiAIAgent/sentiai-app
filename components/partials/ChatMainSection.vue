@@ -44,14 +44,10 @@ watch(
   () => currentConversationID.value,
   async () => {
     loading.value = false;
-    console.log("1");
     await fetchListMessage();
     checkMessageFromStore();
-    console.log("2");
 
     setTimeout(() => {
-      console.log("3");
-
       fetching.value = false;
     }, 150);
   },

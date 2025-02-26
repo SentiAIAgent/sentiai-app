@@ -32,13 +32,13 @@ onMounted(async () => {
     const action = await findDepositAction(data.action_id);
     pair.value = await getPairDetail(action.data.pair_address);
 
-    const listTokenAddress: string[] = [action.data.mint_x, action.data.mint_y];
+    const listTokenAddress: string[] = [action.data.address_x, action.data.address_y];
     const tokens = await fetchTokenAssets(listTokenAddress);
     if (!portfolio.init_done) await portfolio.init();
 
     selectedType.value = action?.data?.strategy;
     tokens.forEach((token) => {
-      objToken.value[token.address] = { ...token, balance: portfolio.assets.tokens.find((t) => t.mint === token.address)?.balance || 0 };
+      objToken.value[token.address] = { ...token, balance: portfolio.assets.tokens.find((t) => t.address === token.address)?.balance || 0 };
     });
     actions.value = {
       ...action,
@@ -138,14 +138,14 @@ watch(
 function checkInsufficient() {
   if (!actions.value) return "";
 
-  const xbalance = objToken.value[actions.value.data.mint_x].balance || 0;
-  const ybalance = objToken.value[actions.value.data.mint_y].balance || 0;
-  const requirex = actions.value.data.amount_x + ((actions.value.data.mint_x as string).startsWith("So11") ? totalFee.value : 0);
-  const requirey = actions.value.data.amount_y + ((actions.value.data.mint_y as string).startsWith("So11") ? totalFee.value : 0);
-  if (requirex > xbalance) return objToken.value[actions.value.data.mint_x].symbol;
-  if (requirey > ybalance) return objToken.value[actions.value.data.mint_y].symbol;
+  const xbalance = objToken.value[actions.value.data.address_x].balance || 0;
+  const ybalance = objToken.value[actions.value.data.address_y].balance || 0;
+  const requirex = actions.value.data.amount_x + ((actions.value.data.address_x as string).startsWith("So11") ? totalFee.value : 0);
+  const requirey = actions.value.data.amount_y + ((actions.value.data.address_y as string).startsWith("So11") ? totalFee.value : 0);
+  if (requirex > xbalance) return objToken.value[actions.value.data.address_x].symbol;
+  if (requirey > ybalance) return objToken.value[actions.value.data.address_y].symbol;
 
-  if (!actions.value.data.mint_x.startsWith("Bnb11") && !actions.value.data.mint_y.startsWith("Bnb11")) {
+  if (!actions.value.data.address_x.startsWith("Bnb11") && !actions.value.data.address_y.startsWith("Bnb11")) {
     if (totalFee.value > portfolio.balance) return "BNB";
   }
   return "";
@@ -166,7 +166,7 @@ function checkInsufficient() {
             class="flex-1 p-4 border rounded-[8px] row-center"
             :class="{ 'bg-app-card1 border-transparent': !editable, 'bg-app-card0  border-app-line2': editable }"
           >
-            <img :src="objToken[actions.data.mint_x].imageUrl" class="w-[24px] h-[24px] md:w-[40px] md:h-[40px] rounded-full" />
+            <img :src="objToken[actions.data.address_x].logo" class="w-[24px] h-[24px] md:w-[40px] md:h-[40px] rounded-full" />
             <input
               class="flex-1 bg-transparent outline-none ml-3 text-end"
               :disabled="!editable"
@@ -177,7 +177,9 @@ function checkInsufficient() {
           </div>
           <p class="text-app-text3 text-[12px] mt-1">
             Balance
-            <span class="text-[#fff]"> {{ formatNumber(objToken[actions.data.mint_x].balance) }} {{ objToken[actions.data.mint_x].symbol }}</span>
+            <span class="text-[#fff]">
+              {{ formatNumber(objToken[actions.data.address_x].balance) }} {{ objToken[actions.data.address_x].symbol }}</span
+            >
           </p>
         </div>
         <div class="flex-1">
@@ -185,7 +187,7 @@ function checkInsufficient() {
             class="flex-1 p-4 rounded-[8px] row-center border"
             :class="{ 'bg-app-card1 border-transparent': !editable, 'bg-app-card0  border-app-line2': editable }"
           >
-            <img :src="objToken[actions.data.mint_y].imageUrl" class="w-[24px] h-[24px] md:w-[40px] md:h-[40px] rounded-full" />
+            <img :src="objToken[actions.data.address_y].logo" class="w-[24px] h-[24px] md:w-[40px] md:h-[40px] rounded-full" />
             <input
               class="flex-1 bg-transparent outline-none ml-3 text-end"
               :disabled="!editable"
@@ -196,7 +198,9 @@ function checkInsufficient() {
           </div>
           <p class="text-app-text3 text-[12px] mt-1">
             Balance
-            <span class="text-[#fff]"> {{ formatNumber(objToken[actions.data.mint_y].balance) }} {{ objToken[actions.data.mint_y].symbol }}</span>
+            <span class="text-[#fff]">
+              {{ formatNumber(objToken[actions.data.address_y].balance) }} {{ objToken[actions.data.address_y].symbol }}</span
+            >
           </p>
         </div>
       </div>

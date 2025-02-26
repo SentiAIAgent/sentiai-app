@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const props = defineProps<{ output: string }>();
-const data = computed(() => convertToolOutput(props.output, "dataset_4f7c1e48-f62d-4f75-bf3b-80d4167a50a9"));
+const data = computed(() => convertToolOutput(props.output, "dataset_6dd7c1c4_7511_4408_947a_7543cce6ff08"));
 
 async function onCopy(address: string) {
   copyToClipboard(address);

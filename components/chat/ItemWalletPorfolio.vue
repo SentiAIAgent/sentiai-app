@@ -4,7 +4,7 @@ const props = defineProps<{ output: string }>();
 const portfolio = usePortfolio();
 const data = convertToolOutput(props.output);
 function findBalanceUSD(address: string) {
-  const _token = portfolio.assets.tokens.find((token) => token.mint === address);
+  const _token = portfolio.assets.tokens.find((token) => token.address === address);
   return _token?.usdPrice || 0;
 }
 </script>

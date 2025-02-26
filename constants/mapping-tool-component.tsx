@@ -8,6 +8,7 @@ import ItemPoolDetail from "~/components/chat/ItemPoolDetail.vue";
 import ItemSecondDegen from "~/components/chat/ItemSecondDegen.vue";
 import ItemSwapPreview from "~/components/chat/ItemSwapPreview.vue";
 import ItemSwapResult from "~/components/chat/ItemSwapResult.vue";
+import ItemTokenData from "~/components/chat/ItemTokenData.vue";
 import ItemTokenHoldingByHolder from "~/components/chat/ItemTokenHoldingByHolder.vue";
 import ItemTokenPrice from "~/components/chat/ItemTokenPrice.vue";
 import ItemTokenSearch from "~/components/chat/ItemTokenSearch.vue";
@@ -24,6 +25,7 @@ export const MAPPING_TOOL_COMPONENT = {
     executetransactionpost: { name: "", component: ItemSwapResult },
     dataset_6dd7c1c4_7511_4408_947a_7543cce6ff08: { name: "Search Token Address", component: ItemTokenSearch },
     bnb_topholders_pnl_get: { name: "Scan Top Holders", component: ItemTopHolder },
+    bnb_tokendata_get: { name: "Fetch Token Market Data", component: ItemTokenData, binding: { inputs: "inputs" } },
     "tokensaddressaggdev-check_get": { name: "Check Developer Profile", component: ItemDevCheck },
     bnb_topholders_portfolio_get: { name: "Get Holders' Portfolio", component: ItemTokenHoldingByHolder },
     bnb_tokenstop_get: { name: "Search Top Tokens", component: ItemTopToken },

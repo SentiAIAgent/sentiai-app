@@ -100,7 +100,7 @@ function onCopy() {
             <p>Amount</p>
             <div class="row-center mt-2">
               <div class="row-center py-[6px] px-2 bg-[#e3e3e3] rounded-[6px] flex-1">
-                <img :src="NATIVE_TOKEN.imageUrl" class="w-[28px] rounded-full" />
+                <img :src="NATIVE_TOKEN.logo" class="w-[28px] rounded-full" />
                 <input type="number" v-model="amount" placeholder="Input amount" class="ml-2 flex-1 bg-transparent outline-none" />
               </div>
               <PartialsButton

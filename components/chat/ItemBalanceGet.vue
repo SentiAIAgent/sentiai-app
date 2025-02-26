@@ -10,8 +10,8 @@ const amount = ref(0);
 const portfolio = usePortfolio();
 
 onMounted(async () => {
-  if (props.inputs?.mint) {
-    const [_token] = await fetchTokenAssets([props.inputs.mint]);
+  if (props.inputs?.address) {
+    const [_token] = await fetchTokenAssets([props.inputs.address]);
     token.value = _token;
   }
   const output = convertToolOutput(props.output);
@@ -35,7 +35,7 @@ onMounted(async () => {
       <div v-if="!!token" class="mt-3 space-y-3">
         <div class="row-center">
           <div class="w-[48px] h-[48px] rounded-full overflow-hidden">
-            <img :src="token?.imageUrl" class="w-full h-full" />
+            <img :src="token?.logo" class="w-full h-full" />
           </div>
           <div class="flex-1 ml-2">
             <p class="text-[#cacaca] font-[600]">

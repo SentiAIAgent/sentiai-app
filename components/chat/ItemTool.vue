@@ -40,20 +40,24 @@ function getComponentProps(id: TToolID, item: ITool) {
 
 <template>
   <template v-for="(item, idx) in props.tools" :key="idx">
-    <div v-if="!!getTool(item.id)" class="rounded-[6px] w-full" :class="{ 'bg-app-card2': !isPreview }">
+    <div
+      v-if="!!getTool(item.id)"
+      class="rounded-[6px] w-full overflow-hidden"
+      :class="{ 'bg-app-card12 border-[1px] border-app-line2 ': !isPreview }"
+    >
       <div v-if="!checkHideTaskName(item.id)" class="row-center p-2">
         <div class="w-[10px] h-[10px] mr-2">
           <img v-if="completed" :src="checkError(item.outputs) ? '/images/icon-task-failer.svg' : '/images/icon-task.svg'" class="w-full h-full" />
           <img v-else src="/images/icon-loading.gif" class="w-[14px]" />
         </div>
-        <p class="font-[600] text-[#cacaca]">{{ getTool(item.id).name }}</p>
+        <p class="font-[600] text-app-text1">{{ getTool(item.id).name }}</p>
       </div>
       <div v-if="completed" :class="{ 'border-t-[1px] border-t-[#FFFFFF1A]': !checkHideTaskName(item.id) }">
         <div v-if="checkError(item.outputs)" class="row-center p-3">
-          <div class="h-[48px] w-[48px] rounded-[6px] flex items-center justify-center bg-[#242424]">
+          <div class="h-[48px] w-[48px] rounded-[6px] flex items-center justify-center bg-app-card1">
             <img src="/images/icon-error.svg" class="w-[24px] h-[24px]" />
           </div>
-          <p class="text-[#CACACA] font-[600] ml-2">Error</p>
+          <p class="text-app-text2 font-[600] ml-2">Error</p>
         </div>
         <div v-else-if="!!getTool(item.id)">
           <component :is="getTool(item.id).component" v-bind="getComponentProps(item.id, item)" />

@@ -54,7 +54,7 @@ export const usePortfolio = defineStore("portfolio-store", {
       ]);
       const bValue = Number(formatUnits(balance.value, balance.decimals));
       this.assets.tokens = tks.map((token) => {
-        if (token.address === NATIVE_TOKEN.address) token.logo = NATIVE_TOKEN.imageUrl;
+        if (token.address === NATIVE_TOKEN.address) token.logo = NATIVE_TOKEN.logo;
         return token;
       });
       this.balance = bValue;

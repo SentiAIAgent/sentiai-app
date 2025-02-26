@@ -14,7 +14,7 @@ onMounted(async () => {
     const outputs = convertToolOutput(props.output);
     const _plans = outputs.plans || ([] as any[]);
     const mints = _plans.map((pl: any) => pl.output_mint);
-    const tokens = await fetchTokenAssets([_plans[0].input_mint, ...mints]);
+    const tokens = await fetchTokenAssets([_plans[0].input_mint, ...addresss]);
     inputToken.value = tokens[0];
     outputToken.value = tokens[tokens.length - 1];
     listOutToken.value = tokens;
@@ -33,13 +33,13 @@ onMounted(async () => {
         <div class="row-center bg-[#1a1a1a] p-4 rounded-[12px] w-full justify-between">
           <p class="text-[20px] md:text-[24px] font-[600]">{{ plans[0].in_amount_float }} {{ inputToken?.symbol }}</p>
           <div class="w-[30px] md:w-[40px] rounded-full overflow-hidden">
-            <img :src="getImageUrl(inputToken.imageUrl, inputToken.address)" class="h-full w-full" />
+            <img :src="getImageUrl(inputToken.logo, inputToken.address)" class="h-full w-full" />
           </div>
         </div>
         <div class="row-center bg-[#1a1a1a] p-4 mt-3 rounded-[12px] w-full justify-between">
           <p class="text-[20px] md:text-[24px] font-[600]">{{ formatNumber(plans[plans.length - 1].out_amount_float) }} {{ outputToken?.symbol }}</p>
           <div class="w-[30px] md:w-[40px] rounded-full overflow-hidden">
-            <img :src="getImageUrl(outputToken.imageUrl, outputToken.address)" class="h-full w-full" />
+            <img :src="getImageUrl(outputToken.logo, outputToken.address)" class="h-full w-full" />
           </div>
         </div>
         <div class="absolute z-[1]">

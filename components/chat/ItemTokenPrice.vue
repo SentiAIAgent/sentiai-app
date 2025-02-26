@@ -20,8 +20,8 @@ function viewScanner(address: string) {
 
 <template>
   <div v-if="token" class="row-center p-3 cursor-pointer">
-    <div v-if="token.imageUrl" class="w-[48px] h-[48px] mr-2">
-      <img :src="token.imageUrl" class="w-full h-full rounded-full" />
+    <div v-if="token.logo" class="w-[48px] h-[48px] mr-2">
+      <img :src="token.logo" class="w-full h-full rounded-full" />
     </div>
     <div class="flex-1 flex flex-col items-start">
       <div class="row-center">
