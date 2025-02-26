@@ -19,15 +19,7 @@ function openTokenLink(address: string, type: "dex" | "search") {
         <p class="text-app-text2">{{ shortAddress(data.address) }}</p>
       </div>
       <div class="row-center">
-        <button class="p-1" @click="openTokenLink(data.address, 'dex')">
-          <img src="/images/icon-dexscreen.svg" class="w-[24px]" />
-        </button>
-        <button class="p-1" @click="openTokenLink(data.address, 'search')">
-          <img src="/images/icon-search-ca.svg" />
-        </button>
-        <button class="p-1">
-          <img src="/images/icon-more-info.svg" class="w-[24px]" />
-        </button>
+        <ChatButtonMoreAction :token_address="data.address" />
       </div>
     </div>
     <div class="row-center px-3">
