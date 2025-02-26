@@ -80,6 +80,7 @@
     body {
         @apply bg-app-background text-app-basic10;
         font-size: 14px;
+        font-family: "Poppins";
         -ms-overflow-style: none; /* IE and Edge */
         scrollbar-width: none; /* Firefox */
     }
