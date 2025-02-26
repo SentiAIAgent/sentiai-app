@@ -48,10 +48,9 @@ function getMessageTime(item: IChatMessage): string {
       >
         <div
           v-html="md.render(item.content) + getMessageTime(item)"
-          class="text-[16px] break-words text-start"
+          class="text-[16px] break-words text-start text-app-content"
           :class="{
-            'text-app-text1 mt-0  ': item.role === 'user',
-            'text-app-text2': item.role === 'assistant',
+            ' mt-0  ': item.role === 'user',
             'mt-[2px]': item.role === 'assistant',
           }"
         />

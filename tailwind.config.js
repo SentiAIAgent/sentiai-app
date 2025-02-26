@@ -128,6 +128,7 @@ module.exports = {
                     text1: "#4c4c4c",
                     text2: "#7e7e7e",
                     text3: "#4c4c4c",
+                    content: "#323232",
                     rt0: "#fff",
                     ye1: "#FCD535",
                     ye2: "#F0B90B",
