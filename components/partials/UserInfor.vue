@@ -59,10 +59,6 @@ function onOpenAccount() {
 
           <div class="line" />
           <div>
-            <div class="py-2 font-[500] cursor-pointer row-center hover:bg-app-card12" @click="onOpenAccount">
-              <span class="flex-1">Account</span> <img src="/images/icon-chevron-right.svg" class="w-[20px]" />
-            </div>
-
             <LogoutButton />
           </div>
         </section>
