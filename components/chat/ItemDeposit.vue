@@ -140,8 +140,8 @@ function checkInsufficient() {
 
   const xbalance = objToken.value[actions.value.data.address_x].balance || 0;
   const ybalance = objToken.value[actions.value.data.address_y].balance || 0;
-  const requirex = actions.value.data.amount_x + ((actions.value.data.address_x as string).startsWith("So11") ? totalFee.value : 0);
-  const requirey = actions.value.data.amount_y + ((actions.value.data.address_y as string).startsWith("So11") ? totalFee.value : 0);
+  const requirex = actions.value.data.amount_x + ((actions.value.data.address_x as string).startsWith("Bnb11") ? totalFee.value : 0);
+  const requirey = actions.value.data.amount_y + ((actions.value.data.address_y as string).startsWith("Bnb11") ? totalFee.value : 0);
   if (requirex > xbalance) return objToken.value[actions.value.data.address_x].symbol;
   if (requirey > ybalance) return objToken.value[actions.value.data.address_y].symbol;
 
