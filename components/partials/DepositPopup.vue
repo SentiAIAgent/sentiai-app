@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { getNativeTokenBalance, NATIVE_TOKEN } from "~/services/bsc/utils";
 import { toast } from "../ui/toast";
+import WcConnect from "../wc/Connect.vue";
+import { useAccount, useDisconnect } from "@wagmi/vue";
 
 const { getUser } = useAuthStore();
 const openQRCode = ref(false);
@@ -11,13 +13,18 @@ const props = defineProps<{
 }>();
 const depositBalance = ref(0);
 const loading = ref(false);
-const address = ref("");
+const { address } = useAccount();
+const { disconnect } = useDisconnect();
 
 const addressView = computed(() => getUser().privy_wallet.address || getUser().wallet?.address);
 
 async function onWalletDepositChange(address?: string) {
-  depositBalance.value = await getNativeTokenBalance(address || "");
+  depositBalance.value = address ? await getNativeTokenBalance(address || "") : 0;
 }
+
+watch(address, () => {
+  onWalletDepositChange(address.value);
+});
 
 async function onDeposit() {
   try {
@@ -83,7 +90,10 @@ function onCopy() {
               <img src="/images/icon-wallet-connect.svg" class="w-[24px] h-[24px]" />
               <p class="ml-2">{{ address ? shortAddress(address) : "Connect with your external wallet" }}</p>
             </div>
-            <div>Connect</div>
+            <WcConnect v-if="!address">
+              <div>Connect</div>
+            </WcConnect>
+            <div v-else @click="disconnect">Disconnect</div>
           </div>
           <div class="line mt-3" />
           <div class="mt-3">

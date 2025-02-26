@@ -34,8 +34,8 @@ export default defineNuxtPlugin((app) => {
         metadata: {
           name: "Senti AI",
           description: "Senti AI",
-          url: `https://account.stavax.io`,
-          icons: ["https://stavax.io/favicon.ico"],
+          url: `https://senti.io`,
+          icons: ["https://senti.io/favicon.ico"],
         },
       }),
     ],
