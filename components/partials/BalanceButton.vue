@@ -114,10 +114,11 @@ async function onOpenPortfolio(e: any) {
               </div>
               <div class="flex flex-col items-center">
                 <div
-                  class="bg-app-btnBg rounded-full p-3 cursor-pointer"
+                  class="rounded-full p-3 cursor-pointer"
+                  :class="vuePrivy.user?.wallet?.delegated ? 'bg-app-red' : 'bg-app-btnBg'"
                   @click="vuePrivy.request(vuePrivy.user?.wallet?.delegated ? 'revoke_delegate' : 'delegate')"
                 >
-                  <img src="/images/icon-delegate.svg" />
+                  <img :src="vuePrivy.user?.wallet?.delegated ? '/images/icon-delegated-white.svg' : '/images/icon-delegate.svg'" />
                 </div>
                 <p :class="vuePrivy.user?.wallet?.delegated ? 'text-app-red' : ''">{{ vuePrivy.user?.wallet?.delegated ? "Revoke" : "Delegate" }}</p>
               </div>

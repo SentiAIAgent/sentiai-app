@@ -1,3 +1,4 @@
+import { getBalance } from "@wagmi/core";
 import { WalletPortfolio } from "./portfolio";
 import { createPublicClient, erc20Abi, formatEther, getContract, formatUnits, http, type Chain, isAddress } from "viem";
 import * as wChains from "viem/chains";
@@ -94,7 +95,13 @@ export async function getBalanceOfToken(params: {
 
 export async function getNativeTokenBalance(walletAddress: string) {
   try {
-    return 0;
+    const balance = await getBalance(config, {
+      address: walletAddress as `0x${string}`,
+    });
+
+    const bValue = Number(formatUnits(balance.value, balance.decimals));
+
+    return bValue;
   } catch {
     return 0;
   }

@@ -2,7 +2,8 @@
 import { getNativeTokenBalance, NATIVE_TOKEN } from "~/services/bsc/utils";
 import { toast } from "../ui/toast";
 import WcConnect from "../wc/Connect.vue";
-import { useAccount, useDisconnect } from "@wagmi/vue";
+import { useAccount, useDisconnect, useSendTransaction, useConnectors } from "@wagmi/vue";
+import { parseEther, parseUnits } from "viem";
 
 const { getUser } = useAuthStore();
 const openQRCode = ref(false);
@@ -13,36 +14,36 @@ const props = defineProps<{
 }>();
 const depositBalance = ref(0);
 const loading = ref(false);
-const { address } = useAccount();
+const { address, connector } = useAccount();
 const { disconnect } = useDisconnect();
+const { sendTransactionAsync } = useSendTransaction();
 
 const addressView = computed(() => getUser().privy_wallet.address || getUser().wallet?.address);
 
 async function onWalletDepositChange(address?: string) {
   depositBalance.value = address ? await getNativeTokenBalance(address || "") : 0;
 }
-
-watch(address, () => {
-  onWalletDepositChange(address.value);
-});
+watch(
+  () => [address.value],
+  () => {
+    onWalletDepositChange(address.value);
+  },
+  {
+    immediate: true,
+  }
+);
 
 async function onDeposit() {
   try {
     loading.value = true;
-    // if (address) {
-    // if (!publicKey.value) return;
-
-    // const transaction = new Transaction().add(
-    //   SystemProgram.transfer({
-    //     fromPubkey: publicKey.value,
-    //     toPubkey: new PublicKey(addressView),
-    //     lamports: amount.value * 1e9,
-    //   })
-    // );
-
-    // const signature = await sendTransaction(transaction, connection);
-
-    // await connection.confirmTransaction(signature, "processed");
+    if (address) {
+      await sendTransactionAsync({
+        connector: connector.value,
+        to: getUser().privy_wallet.address as `0x${string}`,
+        account: address.value,
+        value: parseEther(amount.value.toString(), "wei"),
+      });
+    }
 
     toast({
       description: "Deposit transaction is success, please wait for processing...",
@@ -93,7 +94,7 @@ function onCopy() {
             <WcConnect v-if="!address">
               <div>Connect</div>
             </WcConnect>
-            <div v-else @click="disconnect()">Disconnect</div>
+            <button v-else @click="disconnect()">Disconnect</button>
           </div>
           <div class="line mt-3" />
           <div class="mt-3">

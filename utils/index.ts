@@ -169,11 +169,11 @@ export function getTimeToDiff(time: number) {
 }
 
 export function getTokenExplorerLink(address: string) {
-  return "" + address;
+  return "https://gmgn.ai/bsc/token/" + address;
 }
 
 export function getTokenScanLink(address: string) {
-  return "" + address;
+  return "https://bscscan.com/token/" + address;
 }
 
 export function getImageUrl(imgUrl: string, address: string) {

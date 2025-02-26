@@ -9,14 +9,12 @@ const portfolio = usePortfolio();
     <div class="bg-app-bg0 p-3">
       <div class="row-center justify-between cursor-pointer" @click="copyToClipboard(portfolio.currentAddress)">
         <div class="row-center">
-          <img src="/images/icon-wallet.svg" />
           <p class="ml-1 text-app-text2">
             <span class="font-[600] text-app-text1">Wallet Address:</span> {{ shortAddress(portfolio.currentAddress) }}
           </p>
+          <NuxtIcon name="icon-copy" class="text-[20px] text-app-text2 ml-2" />
         </div>
-        <NuxtIcon name="icon-copy" class="text-[20px] text-app-text2" />
       </div>
-      <div class="line mt-3"></div>
       <div v-for="token in portfolio.assets.tokens" :key="token.address" class="mt-3 space-y-3">
         <div class="row-center">
           <div class="w-[28px] h-[28px] md:w-[40px] md:h-[40px] rounded-full overflow-hidden">
