@@ -16,8 +16,8 @@ function onViewScanner() {
     <div class="ml-2">
       <p class="font-[600] text-[#cacaca]">Transaction Sent</p>
       <div class="row-center text-[#979797]">
-        <p>View details on BNBscan</p>
-        <NuxtIcon name="icon-scanner" class="text-[14px] ml-1" />
+        <p>View details on BSCscan</p>
+        <NuxtIcon name="icon-scanner" class="text-[14px] ml-2" />
       </div>
     </div>
   </div>
