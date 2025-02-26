@@ -11,7 +11,7 @@ export default function ({ children }: { children: React.ReactNode }) {
                 appearance: {
                     theme: "light",
                     accentColor: "#676FFF",
-                    logo: "/favicon.png",
+                    logo: "/images/icon-logo-row.svg",
                 },
                 loginMethods: ["email", "google"],
 
