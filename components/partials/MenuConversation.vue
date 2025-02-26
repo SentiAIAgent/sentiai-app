@@ -105,6 +105,5 @@ function onSelectAgent(agent: IAgent) {
         </div>
       </div>
     </div>
-    <UserInfor v-if="getUser().id" />
   </section>
 </template>

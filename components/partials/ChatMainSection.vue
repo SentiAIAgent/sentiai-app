@@ -374,7 +374,7 @@ function onCheckDelegate() {
   <section class="flex-1 h-full flex flex-col bg-app-bg0 overflow-hidden">
     <div class="row-center justify-between w-full border-b-[1px] border-b-app-line1">
       <BotButton />
-      <div class="row-center">
+      <div v-if="getUser().id" class="row-center">
         <BalanceButton class="mr-4" />
         <PartialsUserInfor class="mr-4" />
       </div>
@@ -405,7 +405,7 @@ function onCheckDelegate() {
                 @click="sendContent(suggest.message)"
                 v-for="(suggest, idx) in currentAgent.metadata?.suggested_messages || []"
                 :key="idx"
-                class="w-full text-app-text2 px-4 py-2 rounded-[4px] border-[1px] border-app-line1 cursor-pointer hover:bg-app-card1"
+                class="w-full text-app-text2 px-4 py-2 rounded-[40px] border-[1px] border-app-line1 cursor-pointer hover:bg-app-card1"
               >
                 <p class="line-clamp-1">{{ suggest.message }}</p>
               </div>
