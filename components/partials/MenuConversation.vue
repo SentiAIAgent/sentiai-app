@@ -105,5 +105,13 @@ function onSelectAgent(agent: IAgent) {
         </div>
       </div>
     </div>
+    <div class="row-center justify-center">
+      <a href="https://x.com/SentiAI_BNB" target="_blank" class="p-2">
+        <img src="/images/icon-twitter.png" class="w-[24px] h-[24px]" />
+      </a>
+      <a href="https://t.me/sentiaid" target="_blank" class="p-2">
+        <img src="/images/icon-telegram.png" class="w-[24px] h-[24px]" />
+      </a>
+    </div>
   </section>
 </template>
