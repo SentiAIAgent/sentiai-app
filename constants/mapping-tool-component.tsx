@@ -22,6 +22,7 @@ export const MAPPING_TOOL_COMPONENT = {
     SentiAiTradingBalanceGet: { name: "Check Token Balance", component: ItemBalanceGet, binding: { inputs: "inputs" } },
     walletsaddressassets_get: { name: "Search Wallet Porfolio", component: ItemWalletPorfolio },
     SentiAiTradingQuoteExecutePost: { name: "Swap Token", component: ItemSwapResult },
+    bnb_swap_execute: { name: "Swap Token", component: ItemSwapResult },
     executetransactionpost: { name: "", component: ItemSwapResult },
     dataset_6dd7c1c4_7511_4408_947a_7543cce6ff08: { name: "Search Token Address", component: ItemTokenSearch },
     bnb_topholders_pnl_get: { name: "Scan Top Holders", component: ItemTopHolder },

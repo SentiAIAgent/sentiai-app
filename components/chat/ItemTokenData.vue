@@ -33,7 +33,7 @@ function openTokenLink(address: string, type: "dex" | "search") {
     <div class="row-center px-3">
       <p class="text-app-text3 text-[24px] font-[500]">${{ formatNumber(data.price?.usd, data.price?.usd > 1 ? 2 : 5) }}</p>
       <span class="ml-2" :class="{ 'text-app-green': data.price?.usd_24h_change > 0, 'text-app-red': data.price?.usd_24h_change < 0 }"
-        >{{ data.price?.usd_24h_change > 0 ? "+" : "-" }}{{ formatNumber(data.price?.usd_24h_change, 2) }}%</span
+        >{{ data.price?.usd_24h_change > 0 ? "+" : "" }}{{ formatNumber(data.price?.usd_24h_change, 2) }}%</span
       >
     </div>
     <div class="mt-3 p-3 grid grid-cols-3 text-center bg-app-card12">

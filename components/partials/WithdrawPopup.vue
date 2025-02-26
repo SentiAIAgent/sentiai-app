@@ -26,7 +26,7 @@ const selectedToken = computed(() => {
 const init = ref<any>(null);
 const usdAmount = computed(() => {
   if (selectedToken.value) {
-    return Number(amount.value || 0) * (selectedToken.value.usd_price || 0);
+    return Number(amount.value || 0) * (selectedToken.value.price_per_token || 0);
   }
   return 0;
 });
@@ -177,7 +177,7 @@ watch(
                 <input
                   placeholder="Enter received address"
                   v-model="withdrawAddress"
-                  class="mt-2 outline-none w-full rounded-[4px] pl-3 h-[32px] bg-app-card2"
+                  class="mt-2 outline-none w-full rounded-[4px] pl-3 h-[40px] bg-app-card2"
                 />
               </div>
 
@@ -213,7 +213,7 @@ watch(
                     class="outline-none text-end flex-1 h-full bg-transparent mr-1 ml-3"
                   />
                 </div>
-                <p class="mt-1">Balance: {{ formatNumber(selectedToken.amount_float, 3) }} {{ selectedToken?.symbol }}</p>
+                <p v-if="!!selectedToken" class="mt-1">Balance: {{ formatNumber(selectedToken.amount_float, 3) }} {{ selectedToken?.symbol }}</p>
               </div>
             </div>
             <PartialsButton
@@ -223,14 +223,6 @@ watch(
               :disabled="!amount || !withdrawAddress"
               @click="onContinueClick"
             />
-            <div class="w-full">
-              <p class="font-[600]">Please note that</p>
-              <ul class="list-disc pl-6 text-app-text2">
-                <li>Enter the amount and the receiving wallet address you wish to withdraw to.</li>
-                <li>Some tokens can only be withdrawn on the same chain from which you deposited them.</li>
-                <li>Please make sure you have enough gas fees to process the transaction.</li>
-              </ul>
-            </div>
           </div>
           <div class="flex-shrink-0 px-4 flex flex-col w-[100%] items-center pb-8 space-y-4 relative" :class="{ hidden: !init }">
             <DialogTitle class="text-center text-[28px] font-[600] mt-2">Confirm Withdraw</DialogTitle>

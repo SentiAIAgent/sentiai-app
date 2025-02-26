@@ -25,6 +25,7 @@ module.exports = {
                 fontSize: "18px",
             },
             p: {
+                lineHeight: "28px",
                 "&:last-child": {
                     marginBottom: "0px",
                 },
@@ -97,6 +98,7 @@ module.exports = {
                 app: {
                     background: "#141414",
                     bg0: "#fff",
+                    bg1: "#f5f5f5",
                     bg2: "#f2f2f2",
                     green: "#24c33d",
                     green2: "#73D13D",

@@ -422,16 +422,16 @@ function onCheckDelegate() {
                 !actionExpired &&
                 !conversationStore.hideChat
               "
-              class="p-6 w-full bg-[#141414] flex flex-col items-center justify-center"
+              class="p-6 w-full bg-app-bg2 flex flex-col items-center justify-center"
             >
               <p class="text-[#979797] text-[16px]">Do you want {{ currentAgent?.name || "SentiAI" }} make this action?</p>
               <div class="row-center mt-3">
-                <div class="font-[600] text-[16px] py-3 px-10 bg-app-bg0 rounded-[6px] cursor-pointer" @click="makeTransactionAction('cancel')">
+                <div class="font-[600] text-[16px] py-3 px-10 bg-app-card2 rounded-[6px] cursor-pointer" @click="makeTransactionAction('cancel')">
                   Cancel
                 </div>
                 <p class="mx-4 font-[600] text-[16px]">/</p>
                 <button
-                  class="font-[600] text-[16px] py-3 px-10 bg-[#fff] rounded-[6px] text-[#131313] cursor-pointer"
+                  class="font-[600] text-[16px] py-3 px-10 bg-app-ye2 rounded-[6px] text-[#131313] cursor-pointer"
                   :class="conversationStore.disableAction ? 'opacity-50' : ''"
                   @click="onCheckDelegate()"
                   :disabled="conversationStore.disableAction"

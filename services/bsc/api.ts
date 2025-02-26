@@ -1,7 +1,6 @@
 import { FungibleToken, IFullToken } from "./type";
 import Fetch from "../api";
-import { getBalanceOfToken, getTokenBalance } from "./utils";
-import { bsc } from "viem/chains";
+import { NATIVE_TOKEN } from "./utils";
 
 const objToken: any = {};
 
@@ -9,18 +8,30 @@ export async function fetchTokenAssets(addresses: string[]): Promise<IFullToken[
   try {
     const storeTokens: any[] = [];
     addresses.forEach((address) => {
-      if (objToken[address]) {
-        storeTokens.push(objToken[address]);
+      const _add = address.toLocaleUpperCase();
+      if (objToken[_add]) {
+        storeTokens.push(objToken[_add]);
       }
     });
     if (storeTokens.length === addresses.length) {
       return storeTokens;
     }
-    const { data } = await Fetch.post<{ tokens: IFullToken[] }>(`@api/tokens/get-infos`, {
-      addresses,
+
+    const { data } = await Fetch.post<{ data: any }>(`@api/tokens/get-infos`, {
+      addresses: addresses,
+    });
+    const tokens: any[] = addresses.map((address) => {
+      if (address.toLocaleLowerCase() === NATIVE_TOKEN.address.toLocaleLowerCase()) {
+        return NATIVE_TOKEN;
+      }
+      return data.data[address.toLocaleLowerCase()] || {};
     });
 
-    const tokens: any[] = [];
+    tokens.forEach((token) => {
+      if (!token.address) return;
+      objToken[token.address.toLocaleUpperCase()] = token;
+    });
+
     return tokens;
   } catch (error) {
     console.log("fetchTokenAssets error", error);

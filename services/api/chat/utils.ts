@@ -15,7 +15,7 @@ export function getQuote(message: IChatMessage, findTool?: boolean) {
     if (!tools) return {};
     const lastTool = tools[tools.length - 1];
     if (!lastTool) return {};
-    const findTradingQuote = tools.find((tool) => tool.name === "SentiAiTradingQuoteAPIPost" || tool.name === "dlmmactionsinit_post");
+    const findTradingQuote = tools.find((tool) => tool.name === "bnb_quote_get" || tool.name === "dlmmactionsinit_post");
     if (!findTradingQuote || !findTradingQuote.outputs) return {};
 
     const realOutput = findTradingQuote.outputs.split("tool response: ")[0];

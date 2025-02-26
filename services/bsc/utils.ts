@@ -9,6 +9,7 @@ export const NATIVE_TOKEN = {
   address: "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
   name: "BNB",
   imageUrl: "https://s2.coinmarketcap.com/static/img/coins/64x64/1839.png",
+  logo: "https://s2.coinmarketcap.com/static/img/coins/64x64/1839.png",
 };
 
 const chainByID: Record<number, Chain> = Object.values(wChains).reduce((res, c) => {
