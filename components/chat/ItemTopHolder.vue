@@ -5,7 +5,7 @@ const totalPercent = (data.items as { amount_percentage: number }[]).reduce((tot
 </script>
 
 <template>
-  <div class="p-3 bg-[#2f2f2f] rounded-b-[6px]">
+  <div class="p-3 bg-app-bg0 rounded-b-[6px]">
     <ul class="list-disc pl-6 space-y-3 text-app-text1 font-[600]">
       <li>In Profit: {{ data.profit_count }}/{{ data.items.length }}</li>
       <li>In Loss: {{ data.loss_count }}/{{ data.items.length }}</li>
@@ -51,6 +51,7 @@ const totalPercent = (data.items as { amount_percentage: number }[]).reduce((tot
           </tbody>
         </table>
       </div>
+      <p v-if="data.items.length" class="pt-3 italic text-app-text2">* The above list excludes CEX (centralized exchange) wallets</p>
     </div>
   </div>
 </template>

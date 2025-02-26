@@ -4,7 +4,7 @@ const data = convertToolOutput(props.output);
 </script>
 
 <template>
-  <div class="p-3 bg-[#2f2f2f] rounded-b-[6px]">
+  <div class="p-3 bg-app-bg0 rounded-b-[6px]">
     <ul class="list-disc pl-6 space-y-3 text-app-text1 font-[600]">
       <li>{{ formatNumber(data.noteworthy_count) }}/{{ formatNumber(data.items?.length || 0) }} top holders are noteworthy</li>
       <li>KOL: {{ formatNumber(data.kol_count) }}</li>

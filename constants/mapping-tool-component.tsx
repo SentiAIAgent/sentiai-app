@@ -27,7 +27,7 @@ export const MAPPING_TOOL_COMPONENT = {
     bnb_topholders_pnl_get: { name: "Scan Top Holders", component: ItemTopHolder },
     bnb_tokendata_get: { name: "Fetch Token Market Data", component: ItemTokenData, binding: { inputs: "inputs" } },
     "tokensaddressaggdev-check_get": { name: "Check Developer Profile", component: ItemDevCheck },
-    bnb_topholders_portfolio_get: { name: "Get Holders' Portfolio", component: ItemTokenHoldingByHolder },
+    bnb_topholders_portfolio_get: { name: "Get Holders Portfolio", component: ItemTokenHoldingByHolder },
     bnb_tokenstop_get: { name: "Search Top Tokens", component: ItemTopToken },
     degen_first_alert: { name: "", component: ItemFirstDegen, binding: { created_at: "created_at", "is-preview": "isPreview", inputs: "inputs" } },
     degen_second_alert: { name: "", component: ItemSecondDegen, binding: { created_at: "created_at", inputs: "inputs" } },

@@ -2,10 +2,6 @@
 const props = defineProps<{ output: any; inputs: any }>();
 const data = convertToolOutput(props.output);
 
-onMounted(async () => {
-  console.log("props", data);
-});
-
 function openTokenLink(address: string, type: "dex" | "search") {
   let url = "";
   if (type === "dex") url = `https://dexscreener.com/bsc/${address}`;

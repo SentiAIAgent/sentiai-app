@@ -3,14 +3,6 @@ import { usePrivy, useIdentityToken } from "@privy-io/react-auth";
 
 export default function ({ children, onSuccess }: { children: React.ReactNode; onSuccess: (id_token: string) => void }) {
     const { user, logout, getAccessToken } = usePrivy();
-    const { identityToken } = useIdentityToken();
-
-    useEffect(() => {
-        if (user)
-            getAccessToken().then((v) => {
-                console.log("user", user);
-            });
-    }, [user]);
 
     async function onClick() {
         localStorage.removeItem("access_token");

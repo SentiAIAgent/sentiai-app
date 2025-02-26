@@ -18,7 +18,6 @@ const addressView = computed(() => portfolio.currentAddress || getUser().privy_w
 const balance = ref(0);
 
 onMounted(async () => {
-  console.log("user", getUser());
   const _balance = portfolio.balance ? portfolio.balance : await getNativeTokenBalance(addressView.value);
   balance.value = _balance;
 });

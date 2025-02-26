@@ -43,7 +43,7 @@ export const formatNumber = (number?: string | number, behind = 5) => {
     value = value.replace(/(\d)(?=(\d{3})+\.)/g, "$1,");
     const [frontDot, behindDot] = value.split(".");
     const tmpSub = Math.round(Number(`0.${behindDot}`) * Math.pow(10, behind)) / Math.pow(10, behind);
-    const sub = tmpSub === 0 ? "0" : tmpSub.toString().split(".")[1];
+    const sub = tmpSub.toString().includes(".") ? tmpSub.toString().split(".")[1] : "0";
 
     value = `${frontDot}${sub ? "." : ""}${sub}`;
   } else {
