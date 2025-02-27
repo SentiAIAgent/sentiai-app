@@ -38,7 +38,7 @@ function onOpenAccount() {
     <Popover v-model:open="openPopup">
       <PopoverTrigger>
         <div>
-          <img src="/images/icon-avatar.svg" class="w-[40px] h-[40px]" />
+          <img src="/images/icon-avatar.svg" class="w-[28px] h-[28px] md:w-[40px] md:h-[40px]" />
         </div>
       </PopoverTrigger>
       <PopoverContent class="p-4 w-[75vw] max-w-[384px] lg:w-64 bg-app-bg0 border-[1px] border-app-line2 rounded-[8px]">

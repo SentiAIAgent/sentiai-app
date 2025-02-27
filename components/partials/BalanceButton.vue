@@ -20,6 +20,7 @@ const container = ref<HTMLElement | null>(null);
 const openWithdraw = ref(false);
 const openAccount = ref(false);
 const vuePrivy = useVuePrivy();
+const mobileView = window.innerWidth < 600;
 
 onClickOutside(container, () => (openPortfolio.value = false));
 
@@ -51,7 +52,6 @@ watch(
 
 async function onOpenPortfolio(e: any) {
   await portfolio.refresh();
-  const mobileView = window.innerWidth < 600;
   if (mobileView) {
     openPortfolioMobile.value = true;
     return;
@@ -62,7 +62,7 @@ async function onOpenPortfolio(e: any) {
 <template>
   <div ref="container">
     <button v-if="!$slots.default" class="row-center py-[6px] px-3 rounded-full bg-app-bg2" @click="onOpenPortfolio">
-      <img src="/images/icon-wallet.svg" class="mr-2" />
+      <img v-if="!mobileView" src="/images/icon-wallet.svg" class="mr-2" />
       <p class="text-[16px]">{{ formatNumber(portfolio.balance, 3) }} BNB</p>
       <NuxtIcon name="icon-arrow-down" class="ml-2" />
     </button>
@@ -82,7 +82,7 @@ async function onOpenPortfolio(e: any) {
             <div class="row-center cursor-pointer text-app-text2" @click="viewScanner">
               <img v-if="getUser()?.avatar_url" :src="getUser().avatar_url" class="w-[24px] h-[24px] mr-2 rounded-full" />
               <p class="text-[16px]">{{ shortAddress(addressView) }}</p>
-              <div class="ml-2">
+              <div class="ml-2" @click="openPortfolio = false">
                 <NuxtIcon name="icon-scanner" class="text-[16px]" />
               </div>
             </div>
@@ -167,7 +167,7 @@ async function onOpenPortfolio(e: any) {
     </div>
     <Dialog v-model:open="openPortfolioMobile">
       <DialogContent class="bg-app-bg0 py-0 px-0 border-none max-h-screen" hideClose>
-        <div class="flex flex-col max-h-screen overflow-y-auto">
+        <div class="relative flex flex-col max-h-[600px] overflow-y-auto">
           <div class="row-center justify-between sticky top-0 left-0 w-full p-4">
             <div class="row-center cursor-pointer text-app-text2" @click="viewScanner">
               <img v-if="getUser()?.avatar_url" :src="getUser().avatar_url" class="w-[24px] h-[24px] mr-2 rounded-full" />
@@ -176,7 +176,7 @@ async function onOpenPortfolio(e: any) {
                 <NuxtIcon name="icon-scanner" class="text-[16px]" />
               </div>
             </div>
-            <div class="cursor-pointer p-1 border-[1px] border-[#979797] rounded-[8px]" @click="openPortfolio = false">
+            <div class="cursor-pointer p-1 border-[1px] border-[#979797] rounded-[8px]" @click="openPortfolioMobile = false">
               <NuxtIcon name="icon-close" class="" />
             </div>
           </div>
@@ -203,10 +203,14 @@ async function onOpenPortfolio(e: any) {
                 <p>Export</p>
               </div>
               <div class="flex flex-col items-center">
-                <div class="bg-app-btnBg rounded-full p-3 cursor-pointer" @click="vuePrivy.request('delegate')">
-                  <img src="/images/icon-delegate.svg" />
+                <div
+                  class="rounded-full p-3 cursor-pointer"
+                  :class="vuePrivy.user?.wallet?.delegated ? 'bg-app-red' : 'bg-app-btnBg'"
+                  @click="vuePrivy.request(vuePrivy.user?.wallet?.delegated ? 'revoke_delegate' : 'delegate')"
+                >
+                  <img :src="vuePrivy.user?.wallet?.delegated ? '/images/icon-delegated-white.svg' : '/images/icon-delegate.svg'" />
                 </div>
-                <p>Delegate</p>
+                <p :class="vuePrivy.user?.wallet?.delegated ? 'text-app-red' : ''">{{ vuePrivy.user?.wallet?.delegated ? "Revoke" : "Delegate" }}</p>
               </div>
             </div>
             <div class="mt-4">

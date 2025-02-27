@@ -11,7 +11,7 @@ module.exports = {
         markdownBase: {
             wrapperClass: "markdown",
             code: {
-                background: "#5a5a5a",
+                background: "#f1f1f1",
                 borderRadius: "4px",
                 padding: "3px 6px ",
             },
