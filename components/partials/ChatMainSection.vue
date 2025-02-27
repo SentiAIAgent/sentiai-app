@@ -4,7 +4,6 @@ import { toast } from "../ui/toast";
 import { fetchEventSource } from "@microsoft/fetch-event-source";
 import { createNewConversation, fetchChatHistory } from "~/services/api/chat/api";
 
-import { useConversationStore } from "~/stores/conversations";
 import BotButton from "../conversation/BotButton.vue";
 import BalanceButton from "./BalanceButton.vue";
 import { checkMessageExpired, findActionIdFromMessage, getActionByTool } from "~/services/api/chat/utils";

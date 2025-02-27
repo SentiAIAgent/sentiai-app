@@ -5,7 +5,6 @@ import PrivyLogout from "~/react_app/LogoutButton";
 
 import { applyPureReactInVue } from "veaury";
 import AccountModal from "./AccountModal.vue";
-import { usePortfolio } from "~/stores/usePortfolio";
 
 const LogoutButton = applyPureReactInVue(PrivyLogout);
 const { getUser, logOut } = useAuthStore();

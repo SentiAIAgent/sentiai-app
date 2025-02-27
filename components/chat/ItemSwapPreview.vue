@@ -15,7 +15,6 @@ onMounted(async () => {
     console.log("outputs", outputs);
     const _route = outputs.route_summary;
     const tokens = await fetchTokenAssets([_route.tokenIn, _route.tokenOut]);
-    console.log("tokens", tokens);
     inputToken.value = tokens[0];
     outputToken.value = tokens[1];
     listOutToken.value = tokens;

@@ -2,8 +2,6 @@
 import { PopoverClose } from "radix-vue";
 
 import { IAgent, IConversation } from "~/services/api/chat/type";
-import { useConversationStore } from "~/stores/conversations";
-import UserInfor from "./UserInfor.vue";
 
 const props = defineProps<{
   onClick?: () => void;
