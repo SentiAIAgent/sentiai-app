@@ -382,19 +382,23 @@ function onCheckDelegate() {
       </div>
     </div>
     <div class="flex-1 overflow-hidden flex flex-col items-center">
-      <div class="flex-1 flex flex-col items-center w-full md:w-[90%] overflow-hidden md:max-w-[768px] 2xl:max-w-[900px]">
+      <div class="flex-1 flex flex-col items-center w-full md:w-[90%] overflow-hidden md:max-w-[940px] 2xl:max-w-[1100px]">
         <div class="flex-1 flex flex-col justify-center w-full overflow-hidden">
           <div v-if="fetching || !currentAgent.id" class="flex-1 flex flex-col items-center justify-center">
             <img src="/images/icon-loading.gif" class="w-[24px]" />
           </div>
-          <div ref="scrollArea" v-else-if="messages.length > 0" class="h-full w-full pt-4 pb-[100px] overflow-y-auto relative">
+          <div
+            ref="scrollArea"
+            v-else-if="messages.length > 0"
+            class="h-full w-full pt-4 pb-[100px] overflow-y-auto relative md:px-[70px] 2xl:px-[100px]"
+          >
             <div class="flex-1 flex flex-col items-center justify-center mb-3" :class="loadMore ? 'opacity-1' : 'opacity-0'">
               <img src="/images/icon-loading.gif" class="w-[24px]" />
             </div>
             <ChatListChat :messages="messages" :thinking="botThinking" />
             <ChatItem v-if="currentMsg" :item="currentMsg" :thinking="botThinking" />
           </div>
-          <div v-else class="flex-1 flex flex-col items-center justify-center">
+          <div v-else class="flex-1 flex flex-col items-center justify-center md:px-[70px] 2xl:px-[100px]">
             <div class="row-center">
               <img :src="currentAgent?.avatar_url || '/images/icon-logo.svg'" class="w-[40px] h-[40px] mr-2 rounded-full" />
               <p class="text-[40px] font-[500]">{{ currentAgent?.name || "Senti AI" }}</p>
@@ -414,7 +418,7 @@ function onCheckDelegate() {
             </div>
           </div>
         </div>
-        <div class="w-full px-3 pb-4">
+        <div class="w-full px-3 pb-4 md:px-[70px] 2xl:px-[100px]">
           <div class="w-full flex flex-row items-start relative">
             <div
               v-if="
