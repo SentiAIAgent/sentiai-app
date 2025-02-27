@@ -46,8 +46,12 @@ module.exports = {
             },
 
             li: {
+                marginLeft: "12px",
                 "p:first-child": {
                     display: "inline",
+                },
+                "&:not(:last-child)": {
+                    marginBottom: "8px",
                 },
             },
             img: {

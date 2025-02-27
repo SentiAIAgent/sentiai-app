@@ -28,6 +28,7 @@ const currentConversation = computed(() => conversationStore.conv);
 const route = useRoute();
 const autoSroll = ref(true);
 const showDelegate = ref(false);
+const privyHook = useVuePrivy();
 
 const currentAgent = computed(() => {
   return conversationStore.conv?.agent || app.agents[0] || {};
@@ -212,6 +213,7 @@ async function onSendMessage(content: string, data?: { action?: string; params: 
           break;
         case "update_title":
           const newTitle = ev.data;
+          window.document.title = newTitle;
           conversationStore.change({ ...conv!, name: newTitle });
           break;
         case "message":
@@ -362,7 +364,7 @@ function makeTransactionAction(action: "confirm" | "cancel") {
 }
 
 function onCheckDelegate() {
-  if (getUser().privy_wallet.is_active) {
+  if (getUser().privy_wallet.is_active && !privyHook.user?.wallet?.delegated) {
     showDelegate.value = true;
     return;
   }

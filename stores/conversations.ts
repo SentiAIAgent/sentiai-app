@@ -109,6 +109,7 @@ export const useConversationStore = defineStore("conversations", {
         if (deleteItem.id === this.conv?.id) {
           this.conv && window.history.replaceState({}, "", `/c`);
           this.conv = undefined;
+          navigateTo("/c");
         }
       } else {
         toast({
