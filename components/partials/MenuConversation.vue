@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { PopoverClose } from "radix-vue";
+import { APP_DATA_LINK } from "~/constants";
 
 import { IAgent, IConversation } from "~/services/api/chat/type";
 
@@ -28,9 +29,9 @@ function onSelectAgent(agent: IAgent) {
   <section class="bg-app-bg2 h-full w-full flex-col flex overflow-hidden">
     <div class="flex flex-col flex-1 overflow-hidden">
       <NuxtLink :to="'/'">
-        <div class="p-4">
+        <div class="px-4 py-5 mt-1">
           <div class="row-center justify-center">
-            <img src="/images/icon-logo-row.svg" class="h-[36px]" />
+            <img src="/images/icon-logo-row.svg" class="h-[24px]" />
           </div>
         </div>
       </NuxtLink>
@@ -104,10 +105,10 @@ function onSelectAgent(agent: IAgent) {
       </div>
     </div>
     <div class="row-center justify-center">
-      <a href="https://x.com/SentiAI_BNB" target="_blank" class="p-2">
+      <a :href="APP_DATA_LINK.telegram" target="_blank" class="p-2">
         <img src="/images/icon-twitter.png" class="w-[18px] h-[18px]" />
       </a>
-      <a href="https://t.me/sentiaid" target="_blank" class="p-2">
+      <a :href="APP_DATA_LINK.x" target="_blank" class="p-2">
         <img src="/images/icon-telegram.png" class="w-[18px] h-[18px]" />
       </a>
     </div>

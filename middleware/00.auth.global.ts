@@ -23,7 +23,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
   } else if (to.name !== "index") {
     return navigateTo("/auth/login");
   }
-  if (to.name === "index") return navigateTo("/auth/login");
+  // if (to.name === "index") return navigateTo("/auth/login");
   if (to.meta.layout === "home") return;
 
   if (to.meta.layout === "conversation") {
