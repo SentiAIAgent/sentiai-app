@@ -128,6 +128,8 @@ module.exports = {
                     visualGrape: "#8D5AF2",
                     red: "#FF4D4F",
                     red2: "#FF5757",
+                    tLight: "#fff",
+                    tDark: "#000",
                     text0: "#131313",
                     text1: "#4c4c4c",
                     text2: "#7e7e7e",

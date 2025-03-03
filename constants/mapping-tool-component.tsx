@@ -1,6 +1,7 @@
 import ItemDevCheck from "~/components/chat/ItemDevCheck.vue";
 import ItemSwapPreview from "~/components/chat/ItemSwapPreview.vue";
 import ItemSwapResult from "~/components/chat/ItemSwapResult.vue";
+import ItemTask from "~/components/chat/ItemTask.vue";
 import ItemTokenData from "~/components/chat/ItemTokenData.vue";
 import ItemTokenHoldingByHolder from "~/components/chat/ItemTokenHoldingByHolder.vue";
 import ItemTokenPrice from "~/components/chat/ItemTokenPrice.vue";

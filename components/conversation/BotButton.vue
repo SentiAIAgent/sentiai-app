@@ -44,7 +44,7 @@ function onItemMenuClick() {
         </div>
       </PopoverTrigger>
       <PopoverContent>
-        <div class="bg-bg-app-bg0 rounded-[12px] p-4">
+        <div class="bg-app-bg0 rounded-[12px] p-4 borer-[1px] shadow">
           <div
             class="row-center cursor-pointer"
             @click="

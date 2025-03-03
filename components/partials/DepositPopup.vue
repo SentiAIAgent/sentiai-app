@@ -81,6 +81,9 @@ function onCopy() {
 <template>
   <Dialog v-model:open="openQRCode">
     <DialogContent class="bg-app-card1 p-0 pb-4 border-none flex flex-col items-center" hide-close>
+      <DialogClose class="absolute top-[-8px] right-[-8px] p-1 bg-app-background rounded-full">
+        <NuxtIcon name="icon-close" class="text-app-tLight" />
+      </DialogClose>
       <div class="text-center text-app-ye2 text-[28px] font-[600] bg-app-background w-full py-4 mt-[-2px]">Receive</div>
 
       <div class="px-4 w-full flex flex-col items-center">

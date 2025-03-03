@@ -1,9 +1,4 @@
 <script setup lang="ts">
-definePageMeta({
-  layout: "landing",
-  guest: true,
-});
-
 useSeoMeta({
   title: "Senti AI",
 });

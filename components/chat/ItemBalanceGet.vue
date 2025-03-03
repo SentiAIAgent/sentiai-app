@@ -21,7 +21,7 @@ onMounted(async () => {
 
 <template>
   <div>
-    <div class="bg-[#141414] p-3">
+    <div class="bg-app-card0 p-3">
       <div class="row-center justify-between cursor-pointer" @click="copyToClipboard(portfolio.currentAddress)">
         <div class="row-center">
           <img src="/images/icon-wallet.svg" />
