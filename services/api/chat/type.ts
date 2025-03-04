@@ -56,3 +56,15 @@ export interface IAgentMetadata {
   suggested_messages: { message: string }[];
   socials: { icon_url: string; title: string; url: string }[];
 }
+
+export interface ITaskBody {
+  id?: string;
+  instruction: string;
+  name: string;
+  schedule: {
+    at: string[];
+    every: string;
+    readable_text?: string;
+    timezone?: string;
+  };
+}

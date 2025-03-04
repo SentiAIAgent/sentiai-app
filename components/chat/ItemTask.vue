@@ -2,6 +2,13 @@
 const openMenu = ref(false);
 const openTask = ref(false);
 
+const props = defineProps<{
+  output: string;
+}>();
+
+const data = convertToolOutput(props.output);
+console.log("data", data);
+
 const items = [
   {
     icon: "/images/icon-edit.svg",
@@ -29,12 +36,12 @@ const items = [
 </script>
 
 <template>
-  <div class="bg-app-card0 p-3">
+  <div v-if="data?.id" class="bg-app-card0 p-3">
     <div class="row-center">
       <img src="/images/icon-alert.svg" />
       <div class="ml-2 flex-1">
-        <p class="font-[500]">Alert BTC, ETH, SOL prices</p>
-        <p class="text-app-text2 text-[12px]">Daily at 9:00 AM</p>
+        <p class="font-[500]">{{ data.name }}</p>
+        <p class="text-app-text2 text-[12px]">{{ data.schedule?.readable_text }}</p>
       </div>
 
       <Popover v-model:open="openMenu">
@@ -51,6 +58,6 @@ const items = [
         </PopoverContent>
       </Popover>
     </div>
-    <ChatEditTaskPopup :open="openTask" @close="() => (openTask = false)" />
+    <ChatEditTaskPopup v-if="!!data?.id" :open="openTask" @close="() => (openTask = false)" :data="data" />
   </div>
 </template>

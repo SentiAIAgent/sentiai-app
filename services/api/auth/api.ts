@@ -6,6 +6,7 @@ export async function loginWithProvider(provider: "google" | "privy", params: an
     const { data } = await Fetch.post<{ data: IAuthLimit }>(`@api/auth/login`, {
       data: params,
       provider,
+      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
     });
     return data.data;
   } catch (error: any) {

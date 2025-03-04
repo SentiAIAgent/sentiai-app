@@ -1,5 +1,5 @@
 import Fetch from "..";
-import { IAgent, IChatMessage, IConversation } from "./type";
+import { IAgent, IChatMessage, IConversation, ITaskBody } from "./type";
 
 export async function createNewConversation(agent_id?: string): Promise<any> {
   try {
@@ -173,5 +173,16 @@ export async function getPairDetail(pair_address: string): Promise<any | undefin
     console.error("getPairDetail er", error.response.status);
 
     return undefined;
+  }
+}
+
+export async function postUpdateTask(id: string, body: ITaskBody): Promise<ITaskBody | null> {
+  try {
+    const { data } = await Fetch.post<{ data: any }>(`@api/conversations/${id}/tasks`, body);
+    return data.data;
+  } catch (error: any) {
+    console.error("findDepositAction er", error.response.status);
+
+    return null;
   }
 }

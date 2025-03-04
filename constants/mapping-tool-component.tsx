@@ -22,4 +22,6 @@ export const MAPPING_TOOL_COMPONENT = {
     "tokensaddressaggdev-check_get": { name: "Check Developer Profile", component: ItemDevCheck },
     bnb_topholders_portfolio_get: { name: "Get Holders Portfolio", component: ItemTokenHoldingByHolder }, //
     bnb_tokenstop_get: { name: "Find Token Lists", component: ItemTopToken }, //
+    v1conversationsidtasks_get: { name: "View Task", component: ItemTask },
+    v1conversationsidtasks_post: { name: "Create Task", component: ItemTask },
 };
