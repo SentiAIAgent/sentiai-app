@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { postUpdateTaskStatus } from "~/services/api/chat/api";
+import { toast } from "../ui/toast";
+
 const openMenu = ref(false);
 const openTask = ref(false);
 
@@ -7,7 +10,9 @@ const props = defineProps<{
 }>();
 
 const data = convertToolOutput(props.output);
-console.log("data", data);
+const conversationStore = useConversationStore();
+
+const itemData = ref(data);
 
 const items = [
   {
@@ -23,6 +28,15 @@ const items = [
     title: "Pause",
     onClick: () => {
       openMenu.value = false;
+      postUpdateTaskStatus({
+        conv_id: conversationStore.conv?.id || "",
+        id: itemData.value.id,
+        status: "paused",
+      });
+      toast({
+        description: "Task paused",
+        duration: 3000,
+      });
     },
   },
   {
@@ -36,12 +50,12 @@ const items = [
 </script>
 
 <template>
-  <div v-if="data?.id" class="bg-app-card0 p-3">
+  <div v-if="itemData?.id" class="bg-app-card0 p-3">
     <div class="row-center">
       <img src="/images/icon-alert.svg" />
       <div class="ml-2 flex-1">
-        <p class="font-[500]">{{ data.name }}</p>
-        <p class="text-app-text2 text-[12px]">{{ data.schedule?.readable_text }}</p>
+        <p class="font-[500]">{{ itemData.name }}</p>
+        <p class="text-app-text2 text-[12px]">{{ itemData.schedule?.readable_text }}</p>
       </div>
 
       <Popover v-model:open="openMenu">
@@ -58,6 +72,6 @@ const items = [
         </PopoverContent>
       </Popover>
     </div>
-    <ChatEditTaskPopup v-if="!!data?.id" :open="openTask" @close="() => (openTask = false)" :data="data" />
+    <ChatEditTaskPopup v-if="!!data?.id" :open="openTask" @close="() => (openTask = false)" :data="itemData" @update="(item) => (itemData = item)" />
   </div>
 </template>

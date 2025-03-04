@@ -176,9 +176,30 @@ export async function getPairDetail(pair_address: string): Promise<any | undefin
   }
 }
 
-export async function postUpdateTask(id: string, body: ITaskBody): Promise<ITaskBody | null> {
+export async function postUpdateTask({ conv_id, id, body }: { conv_id: string; id: string; body: ITaskBody }): Promise<ITaskBody | null> {
   try {
-    const { data } = await Fetch.post<{ data: any }>(`@api/conversations/${id}/tasks`, body);
+    const { data } = await Fetch.put<{ data: any }>(`@api/conversations/${conv_id}/tasks/${id}`, body);
+    return data.data;
+  } catch (error: any) {
+    console.error("findDepositAction er", error.response.status);
+
+    return null;
+  }
+}
+
+export async function postUpdateTaskStatus({
+  conv_id,
+  id,
+  status,
+}: {
+  conv_id: string;
+  id: string;
+  status: "paused" | "active";
+}): Promise<ITaskBody | null> {
+  try {
+    const { data } = await Fetch.put<{ data: any }>(`@api/conversations/${conv_id}/tasks/${id}/status`, {
+      status,
+    });
     return data.data;
   } catch (error: any) {
     console.error("findDepositAction er", error.response.status);

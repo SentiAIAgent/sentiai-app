@@ -8,6 +8,7 @@ const props = defineProps<{
   open: boolean;
   onClose: () => void;
   data: ITaskBody;
+  onUpdate: (body: ITaskBody) => void;
 }>();
 
 const triggerRef = ref<any>(null);
@@ -17,6 +18,7 @@ const openSelectTime = ref(false);
 const openSelectDate = ref(false);
 const name = ref(props.data.name);
 const instruction = ref(props.data.instruction);
+const conversationStore = useConversationStore();
 
 const schedules = [
   {
@@ -78,12 +80,16 @@ async function onSave() {
     at.push("0");
   }
   loading.value = false;
-  const res = await postUpdateTask(props.data?.id || "", {
-    name: name.value,
-    instruction: instruction.value,
-    schedule: {
-      every: schedules[scheIndex.value].value,
-      at: at,
+  const res = await postUpdateTask({
+    conv_id: conversationStore.conv?.id || "",
+    id: props.data?.id || "",
+    body: {
+      name: name.value,
+      instruction: instruction.value,
+      schedule: {
+        every: schedules[scheIndex.value].value,
+        at: at,
+      },
     },
   });
   if (!res) {
@@ -92,6 +98,11 @@ async function onSave() {
       duration: 3000,
     });
   }
+  toast({
+    description: "Update task successfully",
+    duration: 3000,
+  });
+  props.onUpdate(res);
   props.onClose();
 }
 </script>
