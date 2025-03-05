@@ -225,7 +225,18 @@ export async function postUpdateTaskStatus({
     });
     return data.data;
   } catch (error: any) {
-    console.error("findDepositAction er", error.response.status);
+    console.error("postUpdateTaskStatus er", error.response.status);
+
+    return null;
+  }
+}
+
+export async function deleteTask({ conv_id, task_id }: { conv_id: string; task_id: string }): Promise<ITaskBody | null> {
+  try {
+    const { data } = await Fetch.delete<{ data: any }>(`@api/conversations/${conv_id}/tasks/${task_id}`);
+    return data.data;
+  } catch (error: any) {
+    console.error("deleteTask er", error.response.status);
 
     return null;
   }

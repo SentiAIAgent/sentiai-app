@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { postUpdateTask } from "~/services/api/chat/api";
+import { postUpdateTask, postUpdateTaskStatus } from "~/services/api/chat/api";
 import DialogClose from "../ui/dialog/DialogClose.vue";
 import { toast } from "../ui/toast";
 import { ITaskBody } from "~/services/api/chat/type";
@@ -9,6 +9,7 @@ const props = defineProps<{
   onClose: () => void;
   data: ITaskBody;
   onUpdate: (body: ITaskBody) => void;
+  onDelete: (item: any) => void;
 }>();
 
 const triggerRef = ref<any>(null);
@@ -67,6 +68,19 @@ watch(
   }
 );
 
+function onChangeStatus() {
+  const status = props.data.status === "active" ? "paused" : "active";
+  postUpdateTaskStatus({
+    conv_id: conversationStore.conv?.id || "",
+    id: props.data?.id || "",
+    status,
+  });
+  props.onUpdate({
+    ...props.data,
+    status,
+  });
+}
+
 async function onSave() {
   const at: string[] = [];
   if (type.value === 3) {
@@ -108,7 +122,7 @@ async function onSave() {
 </script>
 
 <template>
-  <Dialog :open="open" v-on:update:open="(v) => (v ? null : onClose())">
+  <Dialog :open="open" v-on:update:open="(v: any) => (v ? null : onClose())">
     <DialogContent class="bg-app-bg0 p-0 pb-4 border-none flex flex-col items-center" hide-close>
       <DialogClose class="absolute top-[-8px] right-[-8px] p-1 bg-app-background rounded-full">
         <NuxtIcon name="icon-close" class="text-app-tLight" />
@@ -215,17 +229,27 @@ async function onSave() {
             </Popover>
           </div>
         </div>
-        <div class="flex justify-end pt-4">
-          <button class="w-20 py-[6px] border-[1px] rounded-full" @click="onClose">Cancel</button>
-          <button
-            class="text-[#fff] w-20 py-[6px] border-[1px] rounded-full bg-app-background ml-3"
-            :class="{ 'opacity-50 pointer-events-none': !name || !instruction }"
-            :disabled="!name || !instruction"
-            @click="onSave"
-          >
-            <p v-if="!loading">Save</p>
-            <img v-else src="/images/icon-loading.gif" class="w-[16px]" />
-          </button>
+        <div class="row-center justify-between pt-4">
+          <div>
+            <button class="w-20 py-[6px] border-[1px] rounded-full" @click="() => onChangeStatus()">
+              {{ data.status === "active" ? "Pause" : "Resume" }}
+            </button>
+            <button class="w-20 py-[6px] border-[1px] rounded-full ml-3" @click="() => onDelete(data)">
+              <p>Delete</p>
+            </button>
+          </div>
+          <div>
+            <button class="w-20 py-[6px] border-[1px] rounded-full" @click="onClose">Cancel</button>
+            <button
+              class="text-[#fff] w-20 py-[6px] border-[1px] rounded-full bg-app-background ml-3"
+              :class="{ 'opacity-50 pointer-events-none': !name || !instruction }"
+              :disabled="!name || !instruction"
+              @click="onSave"
+            >
+              <p v-if="!loading">Save</p>
+              <img v-else src="/images/icon-loading.gif" class="w-[16px]" />
+            </button>
+          </div>
         </div>
       </div>
     </DialogContent>

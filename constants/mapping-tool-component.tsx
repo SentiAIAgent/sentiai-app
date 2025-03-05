@@ -1,7 +1,8 @@
 import ItemDevCheck from "~/components/chat/ItemDevCheck.vue";
+import ItemListTask from "~/components/chat/ItemListTask.vue";
 import ItemSwapPreview from "~/components/chat/ItemSwapPreview.vue";
 import ItemSwapResult from "~/components/chat/ItemSwapResult.vue";
-import ItemTask from "~/components/chat/ItemTask.vue";
+import ItemTaskWrapper from "~/components/chat/ItemTaskWrapper.vue";
 import ItemTokenData from "~/components/chat/ItemTokenData.vue";
 import ItemTokenHoldingByHolder from "~/components/chat/ItemTokenHoldingByHolder.vue";
 import ItemTokenPrice from "~/components/chat/ItemTokenPrice.vue";
@@ -22,6 +23,6 @@ export const MAPPING_TOOL_COMPONENT = {
     "tokensaddressaggdev-check_get": { name: "Check Developer Profile", component: ItemDevCheck },
     bnb_topholders_portfolio_get: { name: "Get Holders Portfolio", component: ItemTokenHoldingByHolder }, //
     bnb_tokenstop_get: { name: "Find Token Lists", component: ItemTopToken }, //
-    v1conversationsidtasks_get: { name: "View Task", component: ItemTask },
-    v1conversationsidtasks_post: { name: "Create Task", component: ItemTask },
+    v1conversationsidtasks_get: { name: "Get Current Tasks", component: ItemListTask },
+    v1conversationsidtasks_post: { name: "Create Task", component: ItemTaskWrapper },
 };
