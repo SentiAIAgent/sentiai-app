@@ -176,6 +176,29 @@ export async function getPairDetail(pair_address: string): Promise<any | undefin
   }
 }
 
+export async function getListConvTask(conv_id: string): Promise<any | undefined> {
+  try {
+    const { data } = await Fetch.get<{ data: any }>(`@api/conversations/${conv_id}/tasks`, {
+      method: "GET",
+    });
+    return data.data;
+  } catch (error: any) {
+    console.error("getListConvTask er", error.response.status);
+
+    return undefined;
+  }
+}
+export async function getTaskById(conv_id: string, task_id: string): Promise<any | undefined> {
+  try {
+    const { data } = await Fetch.get<{ data: any }>(`@api/conversations/${conv_id}/tasks/${task_id}`);
+    return data.data;
+  } catch (error: any) {
+    console.error("getTaskById er", error.response.status);
+
+    return undefined;
+  }
+}
+
 export async function postUpdateTask({ conv_id, id, body }: { conv_id: string; id: string; body: ITaskBody }): Promise<ITaskBody | null> {
   try {
     const { data } = await Fetch.put<{ data: any }>(`@api/conversations/${conv_id}/tasks/${id}`, body);

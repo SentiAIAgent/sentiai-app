@@ -12,6 +12,13 @@ type ConversationState = {
   currentAgent?: IAgent;
   disableAction: boolean;
   hideChat: boolean;
+  dataToChat: {
+    content: string;
+    data: {
+      action: string;
+      params: any;
+    };
+  } | null;
 };
 
 export const useConversationStore = defineStore("conversations", {
@@ -24,6 +31,7 @@ export const useConversationStore = defineStore("conversations", {
     currentAgent: undefined,
     disableAction: false,
     hideChat: false,
+    dataToChat: null,
   }),
   actions: {
     setMessages(messages: IChatMessage[]) {

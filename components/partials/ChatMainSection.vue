@@ -58,8 +58,25 @@ watch(
   () => conversationStore.currentMessage,
   () => {
     if (fetching.value || !conversationStore.currentMessage || !conversationStore.convID) return;
-    console.log("new message");
     checkMessageFromStore();
+  }
+);
+
+watch(
+  () => conversationStore.dataToChat,
+  () => {
+    if (!conversationStore.dataToChat) return;
+    messages.value.push({
+      role: "user",
+      id: "",
+      content: conversationStore.dataToChat.content,
+      completed: true,
+      data: {},
+      created_at: new Date().toISOString(),
+    });
+
+    onSendMessage(conversationStore.dataToChat.content, conversationStore.dataToChat.data);
+    setTimeout(() => (conversationStore.dataToChat = null), 1000);
   }
 );
 

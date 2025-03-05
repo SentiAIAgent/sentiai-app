@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { postUpdateTaskStatus } from "~/services/api/chat/api";
+import { getTaskById, postUpdateTaskStatus } from "~/services/api/chat/api";
 import { toast } from "../ui/toast";
+import { ITaskBody } from "~/services/api/chat/type";
 
 const openMenu = ref(false);
 const openTask = ref(false);
@@ -11,10 +12,18 @@ const props = defineProps<{
 
 const data = convertToolOutput(props.output);
 const conversationStore = useConversationStore();
+const active = computed(() => itemData.value?.status === "active");
 
-const itemData = ref(data);
+const itemData = ref<ITaskBody | null>(null);
 
-const items = [
+onMounted(async () => {
+  if (data?.id) {
+    const task = await getTaskById(conversationStore.conv?.id || "", data.id);
+    itemData.value = task;
+  }
+});
+
+const items = computed(() => [
   {
     icon: "/images/icon-edit.svg",
     title: "Edit",
@@ -25,14 +34,16 @@ const items = [
   },
   {
     icon: "/images/icon-pause.svg",
-    title: "Pause",
+    title: !active.value ? "Active" : "Pause",
     onClick: () => {
       openMenu.value = false;
       postUpdateTaskStatus({
         conv_id: conversationStore.conv?.id || "",
-        id: itemData.value.id,
-        status: "paused",
+        id: itemData.value?.id || "",
+        status: active.value ? "paused" : "active",
       });
+
+      itemData.value!.status = active.value ? "paused" : "active";
       toast({
         description: "Task paused",
         duration: 3000,
@@ -44,9 +55,20 @@ const items = [
     title: "Test",
     onClick: () => {
       openMenu.value = false;
+      conversationStore.dataToChat = {
+        content: itemData.value?.instruction || "",
+        data: {
+          action: "execute_task",
+          params: {
+            id: itemData.value?.id || "",
+            name: itemData.value?.name,
+            instruction: itemData.value?.instruction,
+          },
+        },
+      };
     },
   },
-];
+]);
 </script>
 
 <template>
@@ -55,7 +77,10 @@ const items = [
       <img src="/images/icon-alert.svg" />
       <div class="ml-2 flex-1">
         <p class="font-[500]">{{ itemData.name }}</p>
-        <p class="text-app-text2 text-[12px]">{{ itemData.schedule?.readable_text }}</p>
+        <div class="row-center">
+          <p class="text-app-text2 text-[12px]">{{ itemData.schedule?.readable_text }} -</p>
+          <p class="ml-1 bg-app-card2 px-1 rounded-[4px]" :class="active ? 'text-app-green' : 'text-app-red'">{{ active ? " Active" : "Paused" }}</p>
+        </div>
       </div>
 
       <Popover v-model:open="openMenu">

@@ -61,6 +61,7 @@ export interface ITaskBody {
   id?: string;
   instruction: string;
   name: string;
+  status?: "active" | "paused";
   schedule: {
     at: string[];
     every: string;
