@@ -4,6 +4,11 @@ import PopoverTrigger from "../ui/popover/PopoverTrigger.vue";
 import Popover from "../ui/popover/Popover.vue";
 import MenuConversation from "../partials/MenuConversation.vue";
 import BotInformation from "./BotInformation.vue";
+
+defineProps<{
+  hideBot?: boolean;
+}>();
+
 const openSheet = ref(false);
 
 const openBotMenu = ref(false);
@@ -34,7 +39,7 @@ function onItemMenuClick() {
     </Sheet>
 
     <Popover v-model:open="openBotMenu">
-      <PopoverTrigger>
+      <PopoverTrigger v-if="!hideBot">
         <div v-if="currentAgent" class="row-center p-3 bg-app-bg0 rounded-[12px] ml-4">
           <div class="w-[24px] h-[24px] mr-2 rounded-full overflow-hidden">
             <img :src="currentAgent?.avatar_url || '/images/icon-logo.svg'" class="w-[24px] h-[24px]" />

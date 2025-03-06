@@ -9,8 +9,10 @@ export interface IChatMessage {
     observations?: IObservation[];
     actions?: any;
     reply_message?: IChatMessage;
+    executed_task?: ITaskBody;
   };
   created_at: string;
+  type?: "chat" | "execute_task";
 }
 
 export type TAction = "agent_chat" | "url";
@@ -41,6 +43,9 @@ export interface IConversation {
   name: string;
   agent?: IAgent;
   is_readonly?: boolean;
+  task_count: number;
+  last_message_id?: string;
+  last_read_id?: string;
 }
 
 export interface IAgent {
@@ -61,6 +66,7 @@ export interface ITaskBody {
   id?: string;
   instruction: string;
   name: string;
+  conversation_id?: string;
   status?: "active" | "paused";
   schedule: {
     at: string[];

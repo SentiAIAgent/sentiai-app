@@ -76,6 +76,10 @@ export const useConversationStore = defineStore("conversations", {
     setConvID(id: string) {
       this.convID = id;
     },
+    async changeWithId(id: string) {
+      this.convID = id;
+      this.init();
+    },
     async init(conv?: IConversation) {
       this.messages = [];
       if (!this.histories.length) {
@@ -91,10 +95,12 @@ export const useConversationStore = defineStore("conversations", {
       }
     },
     change(conv?: IConversation, addNew?: boolean, newTab?: boolean) {
+      const route = useRoute();
+
       if (!conv) {
         this.convID = "";
         this.conv = { agent: this.currentAgent, name: "New Chat" } as any;
-        return window.history.replaceState({}, "", `/c`);
+        return route.path.startsWith("/c") ? window.history.replaceState({}, "", `/c`) : navigateTo("/c");
       }
       if (addNew) this.histories.unshift(conv);
       else {
@@ -105,7 +111,7 @@ export const useConversationStore = defineStore("conversations", {
       this.conv = conv;
       this.convID = conv.id;
       if (conv) {
-        window.history.replaceState({}, "", `/c/${conv.id}`);
+        route.path.startsWith("/c") ? window.history.replaceState({}, "", `/c/${conv.id}`) : navigateTo(`/c/${conv.id}`);
       }
     },
     async delete(deleteItem: IConversation) {

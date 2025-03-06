@@ -12,7 +12,6 @@ const listOutToken = ref<IFullToken[]>([]);
 onMounted(async () => {
   if (props.output) {
     const outputs = convertToolOutput(props.output);
-    console.log("outputs", outputs);
     const _route = outputs.route_summary;
     const tokens = await fetchTokenAssets([_route.tokenIn, _route.tokenOut]);
     inputToken.value = tokens[0];

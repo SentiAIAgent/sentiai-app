@@ -241,3 +241,14 @@ export async function deleteTask({ conv_id, task_id }: { conv_id: string; task_i
     return null;
   }
 }
+
+export async function fetchAllTask(): Promise<ITaskBody[]> {
+  try {
+    const { data } = await Fetch.get<{ data: any }>(`@api/tasks`);
+    return data.data;
+  } catch (error: any) {
+    console.error("fetchAllTask er", error.response.status);
+
+    return [];
+  }
+}
