@@ -55,9 +55,7 @@ function onSelectAgent(agent: IAgent) {
 
           <div v-if="app.agents.length > 0">
             <p class="text-[#4c4c4c] px-3 mb-2 font-[600]">Tasks</p>
-            <div class="row-center hover:bg-app-card2 cursor-pointer rounded-[12px] py-2 pl-3">
-              <p class="flex-1">Create Task</p>
-            </div>
+
             <div @click="() => navigateTo('/task/list')" class="row-center hover:bg-app-card2 cursor-pointer rounded-[12px] py-2 pl-3">
               <p class="flex-1">Your Task</p>
             </div>
