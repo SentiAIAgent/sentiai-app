@@ -19,7 +19,11 @@ const currentAgent = computed(() => {
 </script>
 
 <template>
-  <div class="w-full row-center px-3" :class="{ 'justify-end ': item.role === 'user', 'mt-6': !showPreDate, 'mt-3': showPreDate }">
+  <div
+    v-if="item.role === 'user' ? conversationStore.showUserContent : true"
+    class="w-full row-center px-3"
+    :class="{ 'justify-end ': item.role === 'user', 'mt-6': !showPreDate, 'mt-3': showPreDate }"
+  >
     <div class="w-[94%] row-center overflow-hidden" :class="{ 'justify-end': item.role === 'user' }">
       <div
         class="flex flex-row max-w-full items-start"

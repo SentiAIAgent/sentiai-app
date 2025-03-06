@@ -4,6 +4,12 @@ import PopoverTrigger from "../ui/popover/PopoverTrigger.vue";
 import Popover from "../ui/popover/Popover.vue";
 import MenuConversation from "../partials/MenuConversation.vue";
 import BotInformation from "./BotInformation.vue";
+import Switch from "../ui/switch/Switch.vue";
+import Tooltip from "../ui/tooltip/Tooltip.vue";
+import TooltipTrigger from "../ui/tooltip/TooltipTrigger.vue";
+import TooltipContent from "../ui/tooltip/TooltipContent.vue";
+import TooltipProvider from "../ui/tooltip/TooltipProvider.vue";
+import ButtonShare from "./ButtonShare.vue";
 
 defineProps<{
   hideBot?: boolean;
@@ -66,7 +72,17 @@ function onItemMenuClick() {
         </div>
       </PopoverContent>
     </Popover>
-
+    <TooltipProvider :delayDuration="0">
+      <Tooltip>
+        <TooltipTrigger>
+          <Switch v-model:checked="conversationStore.showUserContent" />
+        </TooltipTrigger>
+        <TooltipContent>
+          <p>Toggle show/hide user chat</p>
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
+    <ButtonShare />
     <BotInformation v-model:open="openBotInformation" />
   </div>
 </template>

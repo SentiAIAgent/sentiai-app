@@ -12,6 +12,7 @@ type ConversationState = {
   currentAgent?: IAgent;
   disableAction: boolean;
   hideChat: boolean;
+  showUserContent: boolean;
   dataToChat: {
     content: string;
     data: {
@@ -32,6 +33,7 @@ export const useConversationStore = defineStore("conversations", {
     disableAction: false,
     hideChat: false,
     dataToChat: null,
+    showUserContent: true,
   }),
   actions: {
     setMessages(messages: IChatMessage[]) {

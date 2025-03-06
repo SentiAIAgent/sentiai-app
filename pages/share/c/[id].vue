@@ -47,6 +47,7 @@ async function getConversation() {
   }
   conversationStore.setCurrentAgent(conv?.agent);
   conversationStore.conv = conv;
+  conversationStore.showUserContent = conv.config?.publish_mode === "full";
 }
 
 onMounted(async () => {

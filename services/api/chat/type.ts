@@ -42,6 +42,12 @@ export interface IConversation {
   id: string;
   name: string;
   agent?: IAgent;
+  config: {
+    is_favorite: boolean;
+    is_published: boolean;
+    is_readonly: boolean;
+    publish_mode: "execute_task_only" | "full";
+  };
   is_readonly?: boolean;
   task_count: number;
   last_message_id?: string;

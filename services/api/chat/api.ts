@@ -252,3 +252,21 @@ export async function fetchAllTask(): Promise<ITaskBody[]> {
     return [];
   }
 }
+
+export async function putUpdateConversationConfig(
+  conv_id: string,
+  params: {
+    is_favorite?: boolean;
+    is_published?: boolean;
+    publish_mode?: "execute_task_only" | "full";
+  }
+): Promise<ITaskBody | null> {
+  try {
+    const { data } = await Fetch.put<{ data: any }>(`@api/conversations/${conv_id}/config`, params);
+    return data.data;
+  } catch (error: any) {
+    console.error("postUpdateTaskStatus er", error.response.status);
+
+    return null;
+  }
+}
