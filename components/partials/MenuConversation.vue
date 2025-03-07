@@ -3,6 +3,7 @@ import { PopoverClose } from "radix-vue";
 import { APP_DATA_LINK } from "~/constants";
 
 import { IAgent, IConversation } from "~/services/api/chat/type";
+import PopupDelete from "../conversation/PopupDelete.vue";
 
 const props = defineProps<{
   onClick?: () => void;
@@ -12,6 +13,7 @@ const conversationStore = useConversationStore();
 
 const app = useAppSetting();
 const { getUser } = useAuthStore();
+const selectConv = ref<any>(null);
 
 async function onConversationClick(conv: IConversation) {
   await conversationStore.init(conv);
@@ -89,7 +91,7 @@ function onSelectAgent(agent: IAgent) {
                 <PopoverContent class="p-1 bg-app-bg0 rounded-[4px] border-[1px]">
                   <div class="">
                     <PopoverClose>
-                      <div class="row-center text-app-red cursor-pointer" @click="conversationStore.delete(item)">
+                      <div class="row-center text-app-red cursor-pointer" @click="selectConv = item">
                         <div class="w-[24px] h-[24px]">
                           <img src="/images/icon-delete.svg" class="w-[24px] h-[24px]" />
                         </div>
@@ -105,12 +107,23 @@ function onSelectAgent(agent: IAgent) {
       </div>
     </div>
     <div class="row-center justify-center">
-      <a :href="APP_DATA_LINK.telegram" target="_blank" class="p-2">
+      <a :href="APP_DATA_LINK.x" target="_blank" class="p-2">
         <img src="/images/icon-twitter.png" class="w-[18px] h-[18px]" />
       </a>
-      <a :href="APP_DATA_LINK.x" target="_blank" class="p-2">
+      <a :href="APP_DATA_LINK.telegram" target="_blank" class="p-2">
         <img src="/images/icon-telegram.png" class="w-[18px] h-[18px]" />
       </a>
     </div>
+    <PopupDelete
+      v-if="!!selectConv"
+      :conv="selectConv"
+      @close="selectConv = null"
+      @delete="
+        (item) => {
+          conversationStore.delete(item);
+          selectConv = null;
+        }
+      "
+    />
   </section>
 </template>

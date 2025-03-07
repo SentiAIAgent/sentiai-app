@@ -25,7 +25,7 @@ const items = computed(() => [
     },
   },
   {
-    icon: "/images/icon-pause.svg",
+    icon: active.value ? "/images/icon-pause.svg" : "/images/icon-resume.svg",
     title: !active.value ? "Resume" : "Pause",
     onClick: () => {
       postUpdateTaskStatus({

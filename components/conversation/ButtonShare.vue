@@ -73,7 +73,7 @@ function onCopy() {
         <p class="overflow-hidden whitespace-nowrap text-ellipsis flex-1 max-w-[60%] text-app-text2">
           {{ link }}
         </p>
-        <button class="flex-shrink-0 row-center bg-app-btnBg text-app-bg0 py-3 px-6 rounded-full" @click="onCopy">
+        <button class="flex-shrink-0 row-center bg-app-btnBg text-app-bg0 py-3 px-6 rounded-full" :disabled="shareType === 'private'" @click="onCopy">
           <NuxtIcon name="icon-link" class="mr-2" />
           Copy Link
         </button>

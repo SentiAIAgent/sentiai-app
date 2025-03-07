@@ -122,7 +122,7 @@ module.exports = {
                     btnDisableBg: "#656565",
                     cardWarning: "#593535",
                     line1: "#dcdcdc",
-                    line2: "rgba(0, 0, 0, 0.10)",
+                    line2: "rgba(0, 0, 0, 0.15)",
                     line3: "#3d3d3d",
                     text2: "rgba(255, 255, 255, 0.80)",
                     visualGrape: "#8D5AF2",

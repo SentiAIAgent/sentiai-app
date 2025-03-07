@@ -17,14 +17,14 @@ const app = useAppSetting();
 const currentAgent = computed(() => {
   return conversationStore.conv?.agent || app.agents[0];
 });
+const showItem = computed(() => {
+  if ((conversationStore.conv?.task_count || 0) === 0) return true;
+  return conversationStore.showUserContent ? true : props.item.type === "execute_task";
+});
 </script>
 
 <template>
-  <div
-    v-if="conversationStore.showUserContent ? true : item.type === 'execute_task'"
-    class="w-full row-center px-3"
-    :class="{ 'justify-end ': item.role === 'user', 'mt-6': !showPreDate, 'mt-3': showPreDate }"
-  >
+  <div v-if="showItem" class="w-full row-center px-3" :class="{ 'justify-end ': item.role === 'user', 'mt-6': !showPreDate, 'mt-3': showPreDate }">
     <div class="w-[94%] row-center overflow-hidden" :class="{ 'justify-end': item.role === 'user' }">
       <div
         class="flex flex-row max-w-full items-start"

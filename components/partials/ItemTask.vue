@@ -2,12 +2,14 @@
 import { deleteTask, postUpdateTaskStatus } from "~/services/api/chat/api";
 import { ITaskBody } from "~/services/api/chat/type";
 import { toast } from "../ui/toast";
+import PopupDelete from "../conversation/PopupDelete.vue";
 
 const props = defineProps<{
   item: ITaskBody;
 }>();
 
 const openTask = ref(false);
+const openDelete = ref(false);
 const itemData = ref<ITaskBody | null>(props.item);
 
 const conversationStore = useConversationStore();
@@ -64,9 +66,9 @@ async function onDeleteItem() {
               <NuxtIcon name="icon-edit" />
             </button>
             <button class="p-1" @click="onChangeStatus">
-              <img src="/images/icon-pause.svg" class="w-[20px]" />
+              <img :src="active ? '/images/icon-pause.svg' : '/images/icon-resume.svg'" class="w-[20px]" />
             </button>
-            <button class="p-1" @click="onDeleteItem">
+            <button class="p-1" @click="openDelete = true">
               <NuxtIcon name="icon-delete" />
             </button>
           </div>
@@ -80,6 +82,17 @@ async function onDeleteItem() {
       :data="itemData"
       @update="(item: any) => (itemData = item)"
       @delete="() => (itemData = null)"
+    />
+    <PopupDelete
+      v-if="openDelete"
+      @close="openDelete = false"
+      :task="itemData"
+      @delete="
+        () => {
+          onDeleteItem();
+          openDelete = false;
+        }
+      "
     />
   </div>
 </template>

@@ -72,7 +72,7 @@ function onItemMenuClick() {
         </div>
       </PopoverContent>
     </Popover>
-    <TooltipProvider :delayDuration="0">
+    <TooltipProvider v-if="(conversationStore.conv?.task_count || 0) === 0 ? false : !hideBot" :delayDuration="0">
       <Tooltip>
         <TooltipTrigger>
           <Switch v-model:checked="conversationStore.showUserContent" />
@@ -82,7 +82,7 @@ function onItemMenuClick() {
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>
-    <ButtonShare />
+    <ButtonShare v-if="(conversationStore.conv?.task_count || 0) === 0 ? false : !hideBot" />
     <BotInformation v-model:open="openBotInformation" />
   </div>
 </template>
