@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { postUpdateTaskStatus } from "~/services/api/chat/api";
+import { deleteTask, postUpdateTaskStatus } from "~/services/api/chat/api";
 import { ITaskBody } from "~/services/api/chat/type";
 import { toast } from "../ui/toast";
 
@@ -25,6 +25,18 @@ async function onChangeStatus() {
     description: "Task status change",
     duration: 3000,
   });
+}
+
+async function onDeleteItem() {
+  deleteTask({
+    conv_id: itemData.value?.conversation_id || "",
+    task_id: itemData.value?.id || "",
+  });
+  toast({
+    description: "Task deleted",
+    duration: 3000,
+  });
+  itemData.value = null;
 }
 </script>
 
@@ -54,7 +66,7 @@ async function onChangeStatus() {
             <button class="p-1" @click="onChangeStatus">
               <img src="/images/icon-pause.svg" class="w-[20px]" />
             </button>
-            <button class="p-1">
+            <button class="p-1" @click="onDeleteItem">
               <NuxtIcon name="icon-delete" />
             </button>
           </div>

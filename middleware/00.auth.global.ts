@@ -23,10 +23,10 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
   } else if (to.name !== "index") {
     return navigateTo("/auth/login");
   }
-  // if (to.name === "index") return navigateTo("/auth/login");
   if (to.meta.layout === "home") return;
 
   if (to.meta.layout === "conversation") {
+    app.init().then(() => console.log("app.init completed"));
     const route = useRoute();
     conversation.setConvID(route.params.conv_id as string);
     conversation.init().then(() => console.log("conversation.init completed"));

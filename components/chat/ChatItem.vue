@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import moment from "moment";
 import { useMarkdownIt } from "~/composables/useMarkdownIt";
 import { IChatMessage } from "~/services/api/chat/type";
 const md = useMarkdownIt();
@@ -20,7 +21,7 @@ const currentAgent = computed(() => {
 
 <template>
   <div
-    v-if="item.role === 'user' ? conversationStore.showUserContent : true"
+    v-if="conversationStore.showUserContent ? true : item.type === 'execute_task'"
     class="w-full row-center px-3"
     :class="{ 'justify-end ': item.role === 'user', 'mt-6': !showPreDate, 'mt-3': showPreDate }"
   >
@@ -34,6 +35,12 @@ const currentAgent = computed(() => {
           <NuxtIcon v-else name="icon-logo" class="text-[34px]" />
         </div>
         <div class="flex-1 overflow-hidden">
+          <div v-if="item.type === 'execute_task' && item.content && item.data?.executed_task" class="row-center italic pb-3 pt-1">
+            <img src="/images/icon-reply.svg" />
+            <p class="ml-1 text-app-text4">
+              {{ item.data.executed_task.name }} - Updated at {{ moment(item.created_at).format("hh:mm A [on] MMM DD, YYYY") }}
+            </p>
+          </div>
           <div
             v-if="item.data.reply_message"
             class="flex-1 flex bg-[#404040] px-3 pr-1 py-1 rounded-[6px] mb-2 border-l-[3px] border-l-[#fff] max-h-[60px] overflow-hidden"

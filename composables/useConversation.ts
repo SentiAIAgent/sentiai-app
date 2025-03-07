@@ -91,7 +91,6 @@ export const useConversationStore = defineStore("conversations", {
       if (!conv && this.convID) {
         conv = await findConversationById(this.convID);
       }
-
       if (conv) {
         return this.change(conv);
       }

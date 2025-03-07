@@ -78,7 +78,7 @@ function onItemMenuClick() {
           <Switch v-model:checked="conversationStore.showUserContent" />
         </TooltipTrigger>
         <TooltipContent>
-          <p>Toggle show/hide user chat</p>
+          <p>{{ conversationStore.showUserContent ? "Task execution results only" : "Full conversation" }}</p>
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>

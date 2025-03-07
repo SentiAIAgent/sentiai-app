@@ -41,12 +41,7 @@ const loading = computed(() => (props.thinking || (!props.item.content && !props
           <div class="dot h-2 w-2 mx-0.5 rounded-full bg-slate-600" />
         </div>
       </div>
-      <div v-if="item.type === 'execute_task' && item.content && item.data?.executed_task" class="row-center pt-3 italic">
-        <img src="/images/icon-reply.svg" />
-        <p class="ml-1 text-app-text4">
-          {{ item.data.executed_task.name }} - Updated at {{ moment(item.created_at).format("hh:mm A [on] MMM DD, YYYY") }}
-        </p>
-      </div>
+
       <div
         v-if="!loading && item.content"
         class="markdown max-w-full"
