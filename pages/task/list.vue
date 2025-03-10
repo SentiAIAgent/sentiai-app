@@ -51,17 +51,24 @@ onMounted(async () => {
                   </a>
                 </div>
               </div>
-              <div v-if="dataToType.active.length" class="mt-8 md:mt-12">
-                <p class="font-[500]">Scheduled</p>
-                <div class="mt-1 space-y-4">
-                  <ItemTask v-for="itemData in dataToType.active" :item="itemData" :key="itemData.id" class="bg-app-card1 p-3 rounded-[4px]" />
+              <template v-if="dataToType.active.length > 0 || dataToType.paused.length > 0">
+                <div v-if="dataToType.active.length" class="mt-8 md:mt-12">
+                  <p class="font-[500]">Scheduled</p>
+                  <div class="mt-1 space-y-4">
+                    <ItemTask v-for="itemData in dataToType.active" :item="itemData" :key="itemData.id" class="bg-app-card1 p-3 rounded-[4px]" />
+                  </div>
                 </div>
-              </div>
-              <div v-if="dataToType.paused.length" class="mt-8 md:mt-12">
-                <p class="font-[500]">Paused</p>
-                <div class="mt-1 space-y-4">
-                  <ItemTask v-for="itemData in dataToType.paused" :item="itemData" :key="itemData.id" class="bg-app-card1 p-3 rounded-[4px]" />
+                <div v-if="dataToType.paused.length" class="mt-8 md:mt-12">
+                  <p class="font-[500]">Paused</p>
+                  <div class="mt-1 space-y-4">
+                    <ItemTask v-for="itemData in dataToType.paused" :item="itemData" :key="itemData.id" class="bg-app-card1 p-3 rounded-[4px]" />
+                  </div>
                 </div>
+              </template>
+              <div v-else class="mt-8 md:mt-12 flex flex-col items-center">
+                <img src="/images/item-empty.svg" />
+                <p class="mt-4">No tasks found</p>
+                <p class="text-center">Create a new task by selecting <strong class="italic">"Create Task"</strong> in the sidebar</p>
               </div>
             </div>
           </div>
