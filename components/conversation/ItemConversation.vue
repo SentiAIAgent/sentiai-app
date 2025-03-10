@@ -37,7 +37,7 @@ function onFavoriteClick(item: IConversation) {
           <PopoverClose class="row-center">
             <div class="row-center cursor-pointer" @click="onFavoriteClick(item)">
               <div class="w-[24px] h-[24px]">
-                <img :src="item.config.is_favorite ? '/images/icon-favorite.svg' : '/images/icon-unfavorite.svg'" class="w-[24px] h-[24px]" />
+                <img :src="item.config.is_favorite ? '/images/icon-unfavorite.svg' : '/images/icon-favorite.svg'" class="w-[24px] h-[24px]" />
               </div>
               <p class="ml-2">{{ item.config.is_favorite ? "Remove from favorite" : "Add to favorite" }}</p>
             </div>
