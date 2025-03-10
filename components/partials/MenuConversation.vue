@@ -4,12 +4,15 @@ import { APP_DATA_LINK } from "~/constants";
 
 import { IAgent, IConversation } from "~/services/api/chat/type";
 import PopupDelete from "../conversation/PopupDelete.vue";
+import { putUpdateConversationConfig } from "~/services/api/chat/api";
+import ItemConversation from "../conversation/ItemConversation.vue";
 
 const props = defineProps<{
   onClick?: () => void;
 }>();
 
 const conversationStore = useConversationStore();
+const existFavorite = computed(() => conversationStore.histories.filter((item) => item.config.is_favorite)).value.length > 0;
 
 const app = useAppSetting();
 const { getUser } = useAuthStore();
@@ -24,6 +27,11 @@ function onSelectAgent(agent: IAgent) {
   conversationStore.setCurrentAgent(agent);
   conversationStore.change(undefined);
   props.onClick?.();
+}
+
+function onFavoriteClick(item: IConversation) {
+  item.config.is_favorite = !item.config.is_favorite;
+  putUpdateConversationConfig(item.id, { is_favorite: item.config.is_favorite });
 }
 </script>
 
@@ -64,45 +72,22 @@ function onSelectAgent(agent: IAgent) {
             <div class="line mb-4"></div>
           </div>
 
+          <div v-if="existFavorite">
+            <p class="text-[#4c4c4c] px-3 mb-2 font-[600]">Favorite</p>
+            <template v-for="(item, idx) in conversationStore.histories" :key="item.id">
+              <ItemConversation v-if="item.config.is_favorite" :item="item" @click="onConversationClick(item)" @delete="selectConv = item" />
+            </template>
+            <div class="line mb-4"></div>
+          </div>
+
           <p v-if="conversationStore.histories.length > 0" class="text-[#4c4c4c] px-3 mb-2 font-[600]">Recents</p>
-          <div
+          <ItemConversation
             v-for="(item, idx) in conversationStore.histories"
             :key="item.id"
-            class="relative cursor-pointer group hover:bg-app-card2 rounded-[4px]"
-            :class="{ 'bg-app-card2  ': item.id === conversationStore.conv?.id }"
-          >
-            <div @click="onConversationClick(item)" class="row-center justify-between text-[14px] py-2 pl-3">
-              <p class="overflow-hidden whitespace-nowrap text-ellipsis flex-1 pr-6">{{ item.name }}</p>
-              <div v-if="(item.task_count || 0) > 0" class="relative ml-2 mr-2 group-hover:invisible">
-                <img src="/images/icon-task-alert.svg" />
-                <div
-                  v-if="item.last_message_id !== item.last_read_id"
-                  class="bg-app-red w-[8px] h-[8px] rounded-full absolute top-[-3px] right-[-3px]"
-                />
-              </div>
-            </div>
-            <div class="px-2 absolute top-2 right-0 invisible group-hover:visible z-[1]">
-              <Popover>
-                <PopoverTrigger>
-                  <div>
-                    <img src="/images/icon-option.svg" class="w-[24px]" />
-                  </div>
-                </PopoverTrigger>
-                <PopoverContent class="p-1 bg-app-bg0 rounded-[4px] border-[1px]">
-                  <div class="">
-                    <PopoverClose>
-                      <div class="row-center text-app-red cursor-pointer" @click="selectConv = item">
-                        <div class="w-[24px] h-[24px]">
-                          <img src="/images/icon-delete.svg" class="w-[24px] h-[24px]" />
-                        </div>
-                        <p class="ml-2">Delete</p>
-                      </div>
-                    </PopoverClose>
-                  </div>
-                </PopoverContent>
-              </Popover>
-            </div>
-          </div>
+            :item="item"
+            @click="onConversationClick(item)"
+            @delete="selectConv = item"
+          />
         </div>
       </div>
     </div>
