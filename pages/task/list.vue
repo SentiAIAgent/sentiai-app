@@ -15,6 +15,7 @@ const dataToType = ref({
   active: [] as ITaskBody[],
   paused: [] as ITaskBody[],
 });
+const loading = ref(true);
 
 onMounted(async () => {
   const data = await fetchAllTask();
@@ -23,6 +24,7 @@ onMounted(async () => {
       dataToType.value[item.status].push(item);
     }
   });
+  loading.value = false;
 });
 </script>
 
@@ -65,7 +67,7 @@ onMounted(async () => {
                   </div>
                 </div>
               </template>
-              <div v-else class="mt-8 md:mt-12 flex flex-col items-center">
+              <div v-else-if="!loading" class="mt-8 md:mt-12 flex flex-col items-center">
                 <img src="/images/item-empty.svg" />
                 <p class="mt-4">No tasks found</p>
                 <p class="text-center">Create a new task by selecting <strong class="italic">"Create Task"</strong> in the sidebar</p>

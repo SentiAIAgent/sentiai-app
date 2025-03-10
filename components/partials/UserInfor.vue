@@ -46,12 +46,15 @@ function onOpenAccount() {
             <div class="row-center w-full">
               <div class="flex-1">
                 <div class="row-center justify-between">
-                  <p class="text-[16px] font-[600]">Address: {{ shortAddress(portfolio.currentAddress) }}</p>
-                  <div class="px-1 cursor-pointer" @click="viewScanner">
-                    <img src="/images/icon-arrow-up-right.svg" />
+                  <div class="row-center cursor-pointer" @click="copyToClipboard(portfolio.currentAddress)">
+                    <p class="text-[16px] font-[600]">Address: {{ shortAddress(portfolio.currentAddress) }}</p>
+                    <NuxtIcon name="icon-copy" class="ml-1" />
                   </div>
                 </div>
                 <p class="flex-1 text-[#B0B0B0]">Balance: {{ formatNumber(portfolio.balance || balance, 3) }} BNB</p>
+              </div>
+              <div class="px-1 cursor-pointer" @click="viewScanner">
+                <NuxtIcon name="icon-scanner" class="text-[14px]" />
               </div>
             </div>
           </div>
