@@ -42,7 +42,7 @@ function onOpenAccount() {
       </PopoverTrigger>
       <PopoverContent class="p-4 w-[75vw] max-w-[384px] lg:w-64 bg-app-bg0 border-[1px] border-app-line2 rounded-[8px]">
         <section class="text-app-text1">
-          <div>
+          <div class="pb-2">
             <div class="row-center w-full">
               <div class="flex-1">
                 <div class="row-center justify-between">
@@ -57,6 +57,13 @@ function onOpenAccount() {
           </div>
 
           <div class="line" />
+
+          <div>
+            <div @click="() => navigateTo('/task/list')" class="row-center cursor-pointer py-2">
+              <p class="flex-1">Your Task</p>
+            </div>
+            <div class="line"></div>
+          </div>
           <div>
             <LogoutButton />
           </div>

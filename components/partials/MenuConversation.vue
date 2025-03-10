@@ -63,16 +63,7 @@ function onFavoriteClick(item: IConversation) {
             <div class="line mb-4"></div>
           </div>
 
-          <div v-if="app.agents.length > 0">
-            <p class="text-[#4c4c4c] px-3 mb-2 font-[600]">Tasks</p>
-
-            <div @click="() => navigateTo('/task/list')" class="row-center hover:bg-app-card2 cursor-pointer rounded-[12px] py-2 pl-3">
-              <p class="flex-1">Your Task</p>
-            </div>
-            <div class="line mb-4"></div>
-          </div>
-
-          <div v-if="existFavorite">
+          <div>
             <p class="text-[#4c4c4c] px-3 mb-2 font-[600]">Favorite</p>
             <template v-for="(item, idx) in conversationStore.histories" :key="item.id">
               <ItemConversation v-if="item.config.is_favorite" :item="item" @click="onConversationClick(item)" @delete="selectConv = item" />

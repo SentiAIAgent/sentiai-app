@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import BotButton from "~/components/conversation/BotButton.vue";
+import BalanceButton from "~/components/partials/BalanceButton.vue";
 import ItemTask from "~/components/partials/ItemTask.vue";
 import { fetchAllTask } from "~/services/api/chat/api";
 import { ITaskBody } from "~/services/api/chat/type";
@@ -7,6 +8,8 @@ import { ITaskBody } from "~/services/api/chat/type";
 definePageMeta({
   layout: "conversation",
 });
+
+const { getUser } = useAuthStore();
 
 const dataToType = ref({
   active: [] as ITaskBody[],
@@ -29,6 +32,10 @@ onMounted(async () => {
     <div class="flex-1 h-full flex flex-col bg-app-bg0 overflow-hidden">
       <div class="row-center justify-between w-full border-b-[1px] border-b-app-line1">
         <BotButton hide-bot />
+        <div v-if="getUser().id" class="row-center">
+          <BalanceButton class="mr-4" />
+          <PartialsUserInfor class="mr-4" />
+        </div>
       </div>
       <div class="flex-1 overflow-hidden flex flex-col items-center">
         <div class="flex-1 flex flex-col items-center w-full md:w-[90%] overflow-hidden md:max-w-[940px] 2xl:max-w-[1100px]">
