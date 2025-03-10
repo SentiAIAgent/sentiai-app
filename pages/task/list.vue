@@ -38,7 +38,7 @@ onMounted(async () => {
                 <h1 class="text-[#323232] text-[24px] md:text-[36px] xl:text-[40px] font-[500]">Autonomous Tasks</h1>
                 <div class="text-app-text2 text-[12px] md:text-[14px]">
                   Automate repetitive tasks for Senti agents.
-                  <a href="" class="ml-1 inline-flex items-center text-blue-500">
+                  <a href="https://docs.sentiai.io/autonomous-tasks" class="ml-1 inline-flex items-center text-blue-500">
                     <p>Learn more</p>
                     <NuxtIcon name="icon-scanner" class="ml-1" />
                   </a>

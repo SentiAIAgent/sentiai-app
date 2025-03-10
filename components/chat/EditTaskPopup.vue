@@ -145,7 +145,7 @@ async function onSave() {
           <div>
             <div class="row-center">
               <p>Instructions</p>
-              <a href="" class="ml-2 text-blue-500" target="_blank">
+              <a href="https://docs.sentiai.io/autonomous-tasks/task-instructions" class="ml-2 text-blue-500" target="_blank">
                 <div class="row-center">
                   <p>Learn more</p>
                   <NuxtIcon name="icon-scanner" class="ml-1 mt-[2px]" />

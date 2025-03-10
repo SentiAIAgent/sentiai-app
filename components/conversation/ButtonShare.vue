@@ -47,7 +47,7 @@ function onCopy() {
       <div class="px-6">
         <div class="text-app-text2 text-[12px] md:text-[14px] text-center">
           Your name, and custom task information always remain private.
-          <a href="" class="ml-1 inline-flex items-center text-blue-500">
+          <a href="https://docs.sentiai.io/autonomous-tasks" class="ml-1 inline-flex items-center text-blue-500">
             <p>Learn more</p>
             <NuxtIcon name="icon-scanner" class="ml-1" />
           </a>
