@@ -36,7 +36,7 @@ const items = computed(() => [
 
       itemData.value!.status = active.value ? "paused" : "active";
       toast({
-        description: "Task paused",
+        description: "Task status changed",
         duration: 3000,
       });
     },

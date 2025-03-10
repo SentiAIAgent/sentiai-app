@@ -11,7 +11,7 @@ import { putUpdateConversationConfig } from "~/services/api/chat/api";
 const location = window.location;
 const conversationStore = useConversationStore();
 const link = computed(() => `${location.origin}/share/c/${conversationStore.convID}`);
-const shareType = ref<any>(conversationStore.conv?.config?.publish_mode || "full");
+const shareType = ref<any>(conversationStore.conv?.config.is_published ? conversationStore.conv?.config?.publish_mode || "full" : "private");
 
 watch(shareType, () => {
   putUpdateConversationConfig(conversationStore.convID || "", {
