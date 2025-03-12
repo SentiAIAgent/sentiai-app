@@ -81,3 +81,25 @@ export interface ITaskBody {
     timezone?: string;
   };
 }
+
+export type TChatType = "private" | "channel" | "group" | "supergroup";
+
+export interface ITelegramInte {
+  bot_id: number;
+  bot_token_hint: "string";
+  bot_username: string;
+  chat_id: number;
+  chat_title: string;
+  chat_type: TChatType;
+  chat_username: string;
+}
+
+export interface ITwitterInte {}
+
+export interface IIntegration {
+  id: string;
+  created_at: string;
+  provider: "telegram" | "twitter";
+  status: "active" | "inactive";
+  data: ITelegramInte & ITwitterInte;
+}

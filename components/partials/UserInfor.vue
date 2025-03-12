@@ -37,7 +37,7 @@ function onOpenAccount() {
     <Popover v-model:open="openPopup">
       <PopoverTrigger>
         <div>
-          <img src="/images/icon-avatar.svg" class="w-[28px] h-[28px] md:w-[40px] md:h-[40px]" />
+          <img src="/images/icon-avatar.svg" class="w-[28px] h-[28px] md:w-[32px] md:h-[32px]" />
         </div>
       </PopoverTrigger>
       <PopoverContent class="p-4 w-[75vw] max-w-[384px] lg:w-64 bg-app-bg0 border-[1px] border-app-line2 rounded-[8px]">
@@ -60,7 +60,12 @@ function onOpenAccount() {
           </div>
 
           <div class="line" />
-
+          <div>
+            <div @click="() => navigateTo('/profile')" class="row-center cursor-pointer py-2">
+              <p class="flex-1">Profile</p>
+            </div>
+            <div class="line"></div>
+          </div>
           <div>
             <div @click="() => navigateTo('/task/list')" class="row-center cursor-pointer py-2">
               <p class="flex-1">Your Task</p>

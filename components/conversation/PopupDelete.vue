@@ -17,7 +17,7 @@ onMounted(() => {
 });
 
 watch(open, () => {
-  if (!open) props.onClose();
+  if (!open.value) props.onClose();
 });
 </script>
 

@@ -270,3 +270,44 @@ export async function putUpdateConversationConfig(
     return null;
   }
 }
+
+export async function fetchTaskIntergrations({ conv_id, task_id }: { conv_id: string; task_id: string }): Promise<any | null> {
+  try {
+    const { data } = await Fetch.get<{ data: { url: string } }>(`@api/conversations/${conv_id}/tasks/${task_id}/integrations`);
+    return data.data;
+  } catch (error: any) {
+    console.error("fetchTaskIntergrations er", error.response.status);
+
+    return null;
+  }
+}
+
+export async function deleteTaskIntergrations({
+  conv_id,
+  task_id,
+  inter_id,
+}: {
+  conv_id: string;
+  task_id: string;
+  inter_id: string;
+}): Promise<any | null> {
+  try {
+    const { data } = await Fetch.delete(`@api/conversations/${conv_id}/tasks/${task_id}/integrations/${inter_id}`);
+    return data.data;
+  } catch (error: any) {
+    console.error("fetchTaskIntergrations er", error.response.status);
+
+    return null;
+  }
+}
+
+export async function deleteIntergrations({ inter_id }: { inter_id: string }): Promise<any | null> {
+  try {
+    const { data } = await Fetch.delete(`@api/integrations/${inter_id}`);
+    return true;
+  } catch (error: any) {
+    console.error("fetchTaskIntergrations er", error.response.status);
+
+    return false;
+  }
+}

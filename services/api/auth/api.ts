@@ -1,4 +1,5 @@
 import Fetch from "..";
+import { IIntegration } from "../chat/type";
 import { IAuthLimit, IUserProfile } from "./type";
 
 export async function loginWithProvider(provider: "google" | "privy", params: any): Promise<IAuthLimit> {
@@ -44,6 +45,42 @@ export async function payToJoinSubscription() {
     return data;
   } catch (error: any) {
     console.error("payToJoinSubscription er", error.response.status);
+
+    return null;
+  }
+}
+
+export async function fetchOAuthTwitterLink() {
+  try {
+    const { data } = await Fetch.post<{ data: { url: string } }>(`@api/integrations/twitter`, {});
+    return data.data;
+  } catch (error: any) {
+    console.error("fetchOAuthTwitterLink er", error.response.status);
+
+    return null;
+  }
+}
+
+export async function fetchAllIntergrations() {
+  try {
+    const { data } = await Fetch.get<{ data: IIntegration[] }>(`@api/integrations`);
+    return data.data;
+  } catch (error: any) {
+    console.error("fetchAllIntergrations er", error.response.status);
+
+    return [];
+  }
+}
+
+export async function postIntergrationTelegram(body: { bot_token: string; chat_id: Number }) {
+  try {
+    const { data } = await Fetch.post<{ data: any }>(`@api/integrations`, {
+      provider: "telegram",
+      data: body,
+    });
+    return data.data;
+  } catch (error: any) {
+    console.error("postIntergrationTelegram er", error.response.status);
 
     return null;
   }
