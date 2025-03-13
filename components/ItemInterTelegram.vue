@@ -1,11 +1,17 @@
 <script setup lang="ts">
+import { updateIntergrationsStatus } from "~/services/api/chat/api";
 import { IIntegration } from "~/services/api/chat/type";
 
 const props = defineProps<{ item: IIntegration; onDelete?: () => void; onChangeStatus?: (v: boolean) => void }>();
 const selected = ref(props.item.status === "active");
 watch(selected, (v) => {
-  props.onChangeStatus?.(v);
+  if (props.onChangeStatus) props.onChangeStatus?.(v);
+  else onUpdateItemStatus(v);
 });
+
+function onUpdateItemStatus(v: boolean) {
+  updateIntergrationsStatus({ inter_id: props.item.id, status: v ? "active" : "inactive" });
+}
 </script>
 
 <template>
@@ -26,7 +32,16 @@ watch(selected, (v) => {
       </div>
       <p>@{{ item.data.bot_username }}</p>
     </div>
-    <button v-if="!!onDelete" class="text-red-400" @click="onDelete">Disconnect</button>
+    <div v-if="!!onDelete" class="row-center gap-x-4">
+      <Switch v-model:checked="selected" />
+      <a :href="`https://t.me/${item.data.chat_username}`" target="_blank" class="mt-[2px]">
+        <NuxtIcon name="icon-scanner" class="text-[21px]" />
+      </a>
+
+      <button class="text-red-400" @click="onDelete">
+        <img src="/images/icon-delete.svg" />
+      </button>
+    </div>
     <Switch v-if="!!onChangeStatus" v-model:checked="selected" />
   </div>
 </template>

@@ -333,3 +333,14 @@ export async function deleteIntergrations({ inter_id }: { inter_id: string }): P
     return false;
   }
 }
+
+export async function updateIntergrationsStatus({ inter_id, status }: { inter_id: string; status: "active" | "inactive" }): Promise<any | null> {
+  try {
+    const { data } = await Fetch.put(`@api/integrations/${inter_id}/status`, { status });
+    return true;
+  } catch (error: any) {
+    console.error("fetchTaskIntergrations er", error.response.status);
+
+    return false;
+  }
+}
