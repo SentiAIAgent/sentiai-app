@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import BotButton from "~/components/conversation/BotButton.vue";
 import BalanceButton from "~/components/partials/BalanceButton.vue";
-import ItemTask from "~/components/partials/ItemTask.vue";
+import ItemTask from "~/components/task/ItemTask.vue";
 import { fetchAllTask } from "~/services/api/chat/api";
 import { ITaskBody } from "~/services/api/chat/type";
 

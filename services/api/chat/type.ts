@@ -81,7 +81,6 @@ export interface ITaskBody {
     timezone?: string;
   };
 }
-
 export type TChatType = "private" | "channel" | "group" | "supergroup";
 
 export interface ITelegramInte {
@@ -94,7 +93,12 @@ export interface ITelegramInte {
   chat_username: string;
 }
 
-export interface ITwitterInte {}
+export interface ITwitterInte {
+  id: string;
+  avatar_url: string;
+  username: string;
+  name: string;
+}
 
 export interface IIntegration {
   id: string;
@@ -102,4 +106,9 @@ export interface IIntegration {
   provider: "telegram" | "twitter";
   status: "active" | "inactive";
   data: ITelegramInte & ITwitterInte;
+}
+export interface ITaskInte {
+  integration: IIntegration;
+  task: ITaskBody;
+  status: "active" | "inactive";
 }

@@ -107,7 +107,7 @@ async function onDeleteItem() {
         </PopoverContent>
       </Popover>
     </div>
-    <ChatEditTaskPopup
+    <TaskEditTaskPopup
       v-if="!!task?.id && openTask"
       :open="openTask"
       @close="() => (openTask = false)"

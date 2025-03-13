@@ -3,6 +3,7 @@ import { deleteTask, postUpdateTaskStatus } from "~/services/api/chat/api";
 import { ITaskBody } from "~/services/api/chat/type";
 import { toast } from "../ui/toast";
 import PopupDelete from "../conversation/PopupDelete.vue";
+import EditTaskPopup from "./EditTaskPopup.vue";
 
 const props = defineProps<{
   item: ITaskBody;
@@ -75,7 +76,7 @@ async function onDeleteItem() {
         </div>
       </div>
     </div>
-    <ChatEditTaskPopup
+    <EditTaskPopup
       v-if="openTask"
       :open="openTask"
       @close="() => (openTask = false)"

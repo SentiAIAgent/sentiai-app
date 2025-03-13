@@ -1,5 +1,5 @@
 import Fetch from "..";
-import { IAgent, IChatMessage, IConversation, ITaskBody } from "./type";
+import { IAgent, IChatMessage, IConversation, IIntegration, ITaskBody, ITaskInte } from "./type";
 
 export async function createNewConversation(agent_id?: string): Promise<any> {
   try {
@@ -270,15 +270,14 @@ export async function putUpdateConversationConfig(
     return null;
   }
 }
-
-export async function fetchTaskIntergrations({ conv_id, task_id }: { conv_id: string; task_id: string }): Promise<any | null> {
+export async function fetchTaskIntergrations({ conv_id, task_id }: { conv_id: string; task_id: string }) {
   try {
-    const { data } = await Fetch.get<{ data: { url: string } }>(`@api/conversations/${conv_id}/tasks/${task_id}/integrations`);
+    const { data } = await Fetch.get<{ data: ITaskInte[] }>(`@api/conversations/${conv_id}/tasks/${task_id}/integrations`);
     return data.data;
   } catch (error: any) {
     console.error("fetchTaskIntergrations er", error.response.status);
 
-    return null;
+    return [];
   }
 }
 
@@ -293,6 +292,29 @@ export async function deleteTaskIntergrations({
 }): Promise<any | null> {
   try {
     const { data } = await Fetch.delete(`@api/conversations/${conv_id}/tasks/${task_id}/integrations/${inter_id}`);
+    return data.data;
+  } catch (error: any) {
+    console.error("fetchTaskIntergrations er", error.response.status);
+
+    return null;
+  }
+}
+
+export async function updateTaskInterStatus({
+  conv_id,
+  task_id,
+  inter_id,
+  status,
+}: {
+  conv_id: string;
+  task_id: string;
+  inter_id: string;
+  status: "active" | "inactive";
+}): Promise<any | null> {
+  try {
+    const { data } = await Fetch.put(`@api/conversations/${conv_id}/tasks/${task_id}/integrations/${inter_id}`, {
+      status,
+    });
     return data.data;
   } catch (error: any) {
     console.error("fetchTaskIntergrations er", error.response.status);

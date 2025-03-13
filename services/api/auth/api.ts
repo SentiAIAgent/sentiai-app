@@ -52,7 +52,9 @@ export async function payToJoinSubscription() {
 
 export async function fetchOAuthTwitterLink() {
   try {
-    const { data } = await Fetch.post<{ data: { url: string } }>(`@api/integrations/twitter`, {});
+    const { data } = await Fetch.post<{ data: { url: string } }>(`@api/integrations/twitter`, {
+      return_url: `${window.location.origin}/profile`,
+    });
     return data.data;
   } catch (error: any) {
     console.error("fetchOAuthTwitterLink er", error.response.status);

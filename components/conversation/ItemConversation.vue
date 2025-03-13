@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { PopoverClose } from "radix-vue";
 import { putUpdateConversationConfig } from "~/services/api/chat/api";
 import { IConversation } from "~/services/api/chat/type";
 

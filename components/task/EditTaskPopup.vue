@@ -2,8 +2,9 @@
 import { postUpdateTask, postUpdateTaskStatus } from "~/services/api/chat/api";
 import DialogClose from "../ui/dialog/DialogClose.vue";
 import { toast } from "../ui/toast";
-import { ITaskBody } from "~/services/api/chat/type";
+import { IIntegration, ITaskBody } from "~/services/api/chat/type";
 import PopupDelete from "../conversation/PopupDelete.vue";
+import Publish from "./Publish.vue";
 
 const props = defineProps<{
   open: boolean;
@@ -21,7 +22,6 @@ const openSelectDate = ref(false);
 const openDelete = ref(false);
 const name = ref(props.data.name);
 const instruction = ref(props.data.instruction);
-const conversationStore = useConversationStore();
 
 const schedules = [
   {
@@ -73,7 +73,7 @@ watch(
 function onChangeStatus() {
   const status = props.data.status === "active" ? "paused" : "active";
   postUpdateTaskStatus({
-    conv_id: conversationStore.conv?.id || "",
+    conv_id: props.data.conversation_id || "",
     id: props.data?.id || "",
     status,
   });
@@ -97,7 +97,7 @@ async function onSave() {
   }
   loading.value = false;
   const res = await postUpdateTask({
-    conv_id: conversationStore.conv?.id || "",
+    conv_id: props.data.conversation_id || "",
     id: props.data?.id || "",
     body: {
       name: name.value,
@@ -232,6 +232,9 @@ async function onSave() {
               </Popover>
             </div>
           </div>
+
+          <Publish :conv_id="data.conversation_id || ''" :task_id="data.id || ''" />
+
           <div class="row-center justify-between pt-4">
             <div>
               <button class="w-20 py-[6px] border-[1px] rounded-full" @click="() => onChangeStatus()">

@@ -1,5 +1,7 @@
 <script lang="ts" setup>
 import BotButton from "~/components/conversation/BotButton.vue";
+import ItemInterTelegram from "~/components/ItemInterTelegram.vue";
+import ItemInterTwitter from "~/components/ItemInterTwitter.vue";
 import BalanceButton from "~/components/partials/BalanceButton.vue";
 import TelegramConnectPopup from "~/components/partials/TelegramConnectPopup.vue";
 import Collapsible from "~/components/ui/collapsible/Collapsible.vue";
@@ -16,15 +18,15 @@ definePageMeta({
 
 const { getUser } = useAuthStore();
 const portfolio = usePortfolio();
+const loading = ref(true);
+const openTwitter = ref(true);
+const openTeleCollap = ref(false);
+const openTeleConnect = ref(false);
+
 const dataToType = ref({
   telegram: [] as IIntegration[],
   twitter: [] as IIntegration[],
 });
-const loading = ref(true);
-const openTwitter = ref(false);
-const openTeleCollap = ref(true);
-const openTeleConnect = ref(false);
-
 onMounted(async () => {
   getData();
 });
@@ -108,21 +110,14 @@ async function deleteInte(item: IIntegration) {
                         </div>
                       </div>
                       <button v-if="dataToType.twitter.length === 0" class="text-blue-500 font-[600]" @click="getOAuthTwitterLink">Connect</button>
+                      <NuxtIcon v-else name="icon-arrow-down" class="text-[20px] duration-200" :class="{ 'rotate-180': openTwitter }" />
                     </CollapsibleTrigger>
                     <CollapsibleContent class="px-4">
-                      <div class="row-center justify-between py-3 border-b-[1px] border-b-app-line1">
-                        <div class="row-center">
-                          <img src="/images/icon-twitter.png" class="w-[24px] h-[24px]" />
-                          <p class="ml-2 font-[500]">Your X Accounts</p>
-                        </div>
-                        <button class="text-red-400">Disconnect</button>
-                      </div>
-                      <div class="row-center justify-between py-3">
-                        <div class="row-center">
-                          <img src="/images/icon-twitter.png" class="w-[24px] h-[24px]" />
-                          <p class="ml-2 font-[500]">Your X Accounts</p>
-                        </div>
-                        <button class="text-red-400">Disconnect</button>
+                      <ItemInterTwitter v-for="item in dataToType.twitter" :key="item.id" :item="item" @delete="deleteInte(item)" />
+
+                      <div class="text-blue-500 row-center py-3 cursor-pointer" @click="getOAuthTwitterLink">
+                        <img src="/images/icon-add-connect.svg" class="" />
+                        <p class="ml-1 font-[500]">Connect another account</p>
                       </div>
                     </CollapsibleContent>
                   </Collapsible>
@@ -145,27 +140,11 @@ async function deleteInte(item: IIntegration) {
                       <button v-if="dataToType.telegram.length === 0" class="text-blue-500 font-[600]" @click="openTeleConnect = true">
                         Connect
                       </button>
+                      <NuxtIcon v-else name="icon-arrow-down" class="text-[20px] duration-200" :class="{ 'rotate-180': openTeleCollap }" />
                     </CollapsibleTrigger>
                     <CollapsibleContent class="px-4">
-                      <div v-for="item in dataToType.telegram" class="row-center justify-between py-3 border-b-[1px] border-b-app-line1">
-                        <div>
-                          <div class="row-center">
-                            <p class="font-[500]">{{ item.data.chat_title }}</p>
-                            <p
-                              class="ml-1 text-[12px] px-[6px] py-[2px] rounded-[12px] capitalize"
-                              :class="{
-                                'text-[#EB2F96] bg-[#FFF0F6]': item.data.chat_type === 'private',
-                                'text-[#FA8C16] bg-[#FFF7E6]': item.data.chat_type === 'group',
-                                'text-[#13C2C2] bg-[#E6FFFB]': item.data.chat_type === 'channel',
-                              }"
-                            >
-                              {{ item.data.chat_type }}
-                            </p>
-                          </div>
-                          <p>@{{ item.data.bot_username }}</p>
-                        </div>
-                        <button class="text-red-400" @click="deleteInte(item)">Disconnect</button>
-                      </div>
+                      <ItemInterTelegram v-for="item in dataToType.telegram" :key="item.id" :item="item" @delete="deleteInte(item)" />
+
                       <div class="text-blue-500 row-center py-3 cursor-pointer" @click="openTeleConnect = true">
                         <img src="/images/icon-add-connect.svg" class="" />
                         <p class="ml-1 font-[500]">Connect another credentials</p>
