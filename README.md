@@ -6,7 +6,7 @@
 
 Ensure you have the following installed:
 
-- **Node.js**: v122 or later
+- **Node.js**: v22 or later
 - **pnpm**: v10 or later — [Installation guide](https://pnpm.io/installation)
 
 ---
