@@ -51,10 +51,14 @@ async function onConnect() {
             <input v-model="chatID" placeholder="Enter your Chat ID" />
           </div>
         </div>
-        <div class="row-center mt-4 text-blue-500 justify-center cursor-pointer">
+        <a
+          href="https://docs.sentiai.io/autonomous-tasks/publish#get-a-bot-access-token-and-chat-id"
+          target="_blank"
+          class="row-center mt-4 text-blue-500 justify-center cursor-pointer"
+        >
           <p>Learn more about getting a Bot Access Token and Chat ID</p>
           <NuxtIcon name="icon-scanner" class="ml-1" />
-        </div>
+        </a>
         <div class="row-center mt-4 justify-center border-t-[1px] border-t-app-line2 pt-4">
           <button class="w-[80px] py-1 border-[1px] border-app-line2 rounded-full" @click="onClose">Cancel</button>
           <button
