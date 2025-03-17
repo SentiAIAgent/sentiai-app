@@ -19,7 +19,7 @@ definePageMeta({
 const { getUser } = useAuthStore();
 const portfolio = usePortfolio();
 const loading = ref(true);
-const openTwitter = ref(true);
+const openTwitter = ref(false);
 const openTeleCollap = ref(false);
 const openTeleConnect = ref(false);
 
@@ -40,6 +40,8 @@ async function getData() {
   data.forEach((item) => {
     dataToType.value[item.provider].push(item);
   });
+  dataToType.value.telegram.length > 0 && (openTeleCollap.value = true);
+  dataToType.value.twitter.length > 0 && (openTwitter.value = true);
   loading.value = false;
 }
 

@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { updateIntergrationsStatus } from "~/services/api/chat/api";
 import { IIntegration } from "~/services/api/chat/type";
+import PopupDelete from "./conversation/PopupDelete.vue";
 
 const props = defineProps<{ item: IIntegration; onDelete?: () => void; onChangeStatus?: (v: boolean) => void }>();
 const selected = ref(props.item.status === "active");
+const openDelete = ref(false);
 watch(selected, (v) => {
   if (props.onChangeStatus) props.onChangeStatus?.(v);
   else onUpdateItemStatus(v);
@@ -34,14 +36,21 @@ function onUpdateItemStatus(v: boolean) {
     </div>
     <div v-if="!!onDelete" class="row-center gap-x-4">
       <Switch v-model:checked="selected" />
-      <a :href="`https://t.me/${item.data.chat_username}`" target="_blank" class="mt-[2px]">
+      <a :href="`https://t.me/${item.data.bot_username || item.data.chat_username}`" target="_blank" class="mt-[2px]">
         <NuxtIcon name="icon-scanner" class="text-[21px]" />
       </a>
 
-      <button class="text-red-400" @click="onDelete">
+      <button class="text-red-400" @click="openDelete = true">
         <img src="/images/icon-delete.svg" />
       </button>
     </div>
     <Switch v-if="!!onChangeStatus" v-model:checked="selected" />
+    <PopupDelete
+      v-if="openDelete"
+      @close="openDelete = false"
+      @delete="() => onDelete?.()"
+      title="Delete"
+      description="Are you sure you want to delete this account? All automated tasks integrated with this account will be terminated immediately."
+    />
   </div>
 </template>

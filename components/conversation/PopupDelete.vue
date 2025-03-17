@@ -9,6 +9,8 @@ const props = defineProps<{
   onDelete: (item: any) => void;
   onClose: () => void;
   task?: ITaskBody;
+  title?: string;
+  description?: string;
 }>();
 
 const open = ref(false);
@@ -28,20 +30,25 @@ watch(open, () => {
         <NuxtIcon name="icon-close" class="text-app-tLight" />
       </DialogClose>
       <div class="text-center text-app-ye2 text-[28px] font-[500] bg-app-background w-full py-4 mt-[-2px]">
-        Delete {{ conv ? "Conversation" : "Task" }}
+        Delete {{ title ? title : conv ? "Conversation" : "Task" }}
       </div>
       <div class="px-6">
-        <div v-if="(conv?.task_count || 0) > 0" class="text-app-text2 text-[12px] md:text-[14px] text-center">
-          <p>This conversation includes {{ conv?.task_count }} active tasks.</p>
-          <p>Deleting will permanently remove these tasks and cannot be undone.</p>
-        </div>
-        <div v-else-if="!!conv" class="text-app-text2 text-[12px] md:text-[14px] text-center">
-          <p>Are you sure you want to delete this conversation?</p>
-          <p>This cannot be undone.</p>
+        <div v-if="description" class="text-app-text2 text-[12px] md:text-[14px] text-center">
+          <p>{{ description }}</p>
         </div>
         <div v-else class="text-app-text2 text-[12px] md:text-[14px] text-center">
-          <p>Are you sure you want to delete this task?</p>
-          <p>This cannot be undone.</p>
+          <div v-if="(conv?.task_count || 0) > 0">
+            <p>This conversation includes {{ conv?.task_count }} active tasks.</p>
+            <p>Deleting will permanently remove these tasks and cannot be undone.</p>
+          </div>
+          <div v-else-if="!!conv">
+            <p>Are you sure you want to delete this conversation?</p>
+            <p>This cannot be undone.</p>
+          </div>
+          <div v-else>
+            <p>Are you sure you want to delete this task?</p>
+            <p>This cannot be undone.</p>
+          </div>
         </div>
         <div class="row-center mt-4 justify-center">
           <button class="w-[80px] py-1 border-[1px] border-app-line2 rounded-full" @click="onClose">Cancel</button>
