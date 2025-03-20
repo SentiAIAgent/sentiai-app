@@ -4,6 +4,7 @@ import { getNativeTokenBalance } from "~/services/bsc/utils";
 import DepositPopup from "./DepositPopup.vue";
 import WithdrawPopup from "./WithdrawPopup.vue";
 import { postActiveWallet } from "~/services/api/wallet/api";
+import Switch from "../ui/switch/Switch.vue";
 
 const { getUser, setUser } = useAuthStore();
 const openQRCode = ref(false);
