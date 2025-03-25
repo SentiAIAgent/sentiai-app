@@ -8,6 +8,7 @@ export interface IAuthLimit {
 export interface IWalletInfor {
   address: string;
   is_active: boolean;
+  provider: "privy_server_wallet" | "";
 }
 
 export interface IUserProfile {
@@ -18,6 +19,7 @@ export interface IUserProfile {
   wallet: IWalletInfor;
   avatar_url: string;
   privy_wallet: IWalletInfor;
+
   subscription: {
     expire_at: string;
     data?: {

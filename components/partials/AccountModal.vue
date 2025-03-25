@@ -146,6 +146,7 @@ function onOpenDeposit(addr: string) {
               <span class="font-[600] ml-1">Export</span>
             </button>
             <button
+              v-if="getUser().privy_wallet.provider !== 'privy_server_wallet'"
               class="bg-[#fff] rounded-[6px] p-2 row-center text-[#131313]"
               :class="vuePrivy.user?.wallet?.delegated ? 'bg-app-red text-[#fff] ' : ''"
               @click="vuePrivy.request(vuePrivy.user?.wallet?.delegated ? 'revoke_delegate' : 'delegate')"
