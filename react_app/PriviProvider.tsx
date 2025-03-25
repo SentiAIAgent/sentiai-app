@@ -13,7 +13,7 @@ export default function ({ children }: { children: React.ReactNode }) {
                     accentColor: "#676FFF",
                     logo: "/images/icon-logo-row.svg",
                 },
-                loginMethods: ["email", "google"],
+                loginMethods: ["google", "twitter", "email"],
 
                 // Create embedded wallets for users who don't have a wallet
                 embeddedWallets: {

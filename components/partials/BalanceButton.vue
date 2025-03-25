@@ -107,12 +107,6 @@ async function onOpenPortfolio(e: any) {
                 <p>Send</p>
               </div>
               <div class="flex flex-col items-center">
-                <div class="bg-app-btnBg rounded-full p-3 cursor-pointer" @click="vuePrivy.request('export')">
-                  <img src="/images/icon-export.svg" />
-                </div>
-                <p>Export</p>
-              </div>
-              <div class="flex flex-col items-center">
                 <div
                   class="rounded-full p-3 cursor-pointer"
                   :class="vuePrivy.user?.wallet?.delegated ? 'bg-app-red' : 'bg-app-btnBg'"
@@ -196,12 +190,7 @@ async function onOpenPortfolio(e: any) {
                 </div>
                 <p>Send</p>
               </div>
-              <div class="flex flex-col items-center">
-                <div class="bg-app-btnBg rounded-full p-3 cursor-pointer" @click="vuePrivy.request('export')">
-                  <img src="/images/icon-export.svg" />
-                </div>
-                <p>Export</p>
-              </div>
+
               <div class="flex flex-col items-center">
                 <div
                   class="rounded-full p-3 cursor-pointer"
