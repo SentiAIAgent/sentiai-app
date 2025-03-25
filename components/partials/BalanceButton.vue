@@ -93,7 +93,7 @@ async function onOpenPortfolio(e: any) {
           <div class="px-4">
             <p class="text-[28px] font-[600]">${{ formatNumber(portfolio.totalBalance, 2) }}</p>
 
-            <div class="row-center justify-between mt-4">
+            <div class="row-center justify-center mt-4 space-x-6">
               <div class="flex flex-col items-center">
                 <div class="bg-app-btnBg rounded-full p-3 cursor-pointer" @click="onOpenDeposit">
                   <img src="/images/icon-receive.svg" />
@@ -106,9 +106,8 @@ async function onOpenPortfolio(e: any) {
                 </div>
                 <p>Send</p>
               </div>
-              <div class="flex flex-col items-center">
+              <div v-if="getUser()?.privy_wallet?.provider !== 'privy_server_wallet'" class="flex flex-col items-center">
                 <div
-                  v-if="getUser()?.privy_wallet?.provider !== 'privy_server_wallet'"
                   class="rounded-full p-3 cursor-pointer"
                   :class="vuePrivy.user?.wallet?.delegated ? 'bg-app-red' : 'bg-app-btnBg'"
                   @click="vuePrivy.request(vuePrivy.user?.wallet?.delegated ? 'revoke_delegate' : 'delegate')"
@@ -178,7 +177,7 @@ async function onOpenPortfolio(e: any) {
           <div class="px-4">
             <p class="text-[28px] font-[600]">${{ formatNumber(portfolio.totalBalance, 2) }}</p>
 
-            <div class="row-center justify-between mt-4">
+            <div class="row-center justify-center mt-4">
               <div class="flex flex-col items-center">
                 <div class="bg-app-btnBg rounded-full p-3 cursor-pointer" @click="onOpenDeposit">
                   <img src="/images/icon-receive.svg" />
@@ -192,9 +191,8 @@ async function onOpenPortfolio(e: any) {
                 <p>Send</p>
               </div>
 
-              <div class="flex flex-col items-center">
+              <div class="flex flex-col items-center" v-if="getUser()?.privy_wallet?.provider !== 'privy_server_wallet'">
                 <div
-                  v-if="getUser()?.privy_wallet?.provider !== 'privy_server_wallet'"
                   class="rounded-full p-3 cursor-pointer"
                   :class="vuePrivy.user?.wallet?.delegated ? 'bg-app-red' : 'bg-app-btnBg'"
                   @click="vuePrivy.request(vuePrivy.user?.wallet?.delegated ? 'revoke_delegate' : 'delegate')"

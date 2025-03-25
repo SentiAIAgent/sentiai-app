@@ -10,7 +10,9 @@ import { NATIVE_TOKEN } from "~/services/bsc/utils";
 export const config = createConfig({
   chains: [bsc],
   transports: {
-    [bsc.id]: http(),
+    [bsc.id]: http("https://binance.llamarpc.com", {
+      batch: true,
+    }),
   },
 });
 const DURATION_CACHE = 1000 * 60 * 5;
