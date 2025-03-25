@@ -108,7 +108,7 @@ async function onOpenPortfolio(e: any) {
               </div>
               <div class="flex flex-col items-center">
                 <div
-                  v-if="getUser().privy_wallet.provider !== 'privy_server_wallet'"
+                  v-if="getUser()?.privy_wallet?.provider !== 'privy_server_wallet'"
                   class="rounded-full p-3 cursor-pointer"
                   :class="vuePrivy.user?.wallet?.delegated ? 'bg-app-red' : 'bg-app-btnBg'"
                   @click="vuePrivy.request(vuePrivy.user?.wallet?.delegated ? 'revoke_delegate' : 'delegate')"
@@ -194,7 +194,7 @@ async function onOpenPortfolio(e: any) {
 
               <div class="flex flex-col items-center">
                 <div
-                  v-if="getUser().privy_wallet.provider !== 'privy_server_wallet'"
+                  v-if="getUser()?.privy_wallet?.provider !== 'privy_server_wallet'"
                   class="rounded-full p-3 cursor-pointer"
                   :class="vuePrivy.user?.wallet?.delegated ? 'bg-app-red' : 'bg-app-btnBg'"
                   @click="vuePrivy.request(vuePrivy.user?.wallet?.delegated ? 'revoke_delegate' : 'delegate')"
